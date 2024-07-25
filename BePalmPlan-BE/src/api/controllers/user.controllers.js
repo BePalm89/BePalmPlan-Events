@@ -1,4 +1,5 @@
 import User from "../models/User.model.js";
+import Event from "../models/Event.model.js";
 import bcrypt from "bcrypt";
 import { generateToken } from "../../utils/jtw.js";
 import { blacklistToken } from "../../utils/blacklistToken.js";
@@ -177,6 +178,20 @@ export const addAttendEvents = async (req, res, next) => {
 
     const currentUser = await User.findById(id);
 
+    const eventToAttend = await Event.findById(attendEvents[0]);
+
+    if(!eventToAttend) {
+      return res.status(404).json("Event not found");
+    }
+
+    const modifiedEvent = new Event({
+      attendees: [...eventToAttend.attendees, id]
+    });
+
+    modifiedEvent._id = attendEvents[0];
+
+    await Event.findByIdAndUpdate(attendEvents[0], modifiedEvent, { new: true});
+ 
     if (!currentUser) {
       return res.status(404).json("User not found");
     }
@@ -226,6 +241,20 @@ export const removeAttendEvents = async (req, res, next) => {
     }
 
     const currentUser = await User.findById(id);
+
+    const eventToAttend = await Event.findById(attendEvents[0]);
+
+    const userIndex = eventToAttend.attendees.findIndex(userId => userId.toString() === id);
+
+    if(userIndex === -1) {
+      return res.status(400).json("User is not in the list");
+    }
+
+    eventToAttend.attendees.splice(userIndex, 1);
+
+    eventToAttend._id = attendEvents[0];
+
+    await Event.findByIdAndUpdate(attendEvents[0], eventToAttend, { new: true});
 
     if (!currentUser) {
       return res.status(404).json("User not found");

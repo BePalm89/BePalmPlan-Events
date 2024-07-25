@@ -190,16 +190,16 @@ export const isTokenBlacklisted = (token) => {
 
 ## Users endpoint:
 
-| ENDPOINT                   | METHOD | DESCRIPTION                                 | REQUEST BODY                               | RESPONSE                               | MIDDLEWARE  |
-| -------------------------- | ------ | ------------------------------------------- | ------------------------------------------ | -------------------------------------- | ----------- |
-| /register                  | POST   | Register a new user                         | username, password, email, profile picture | 200 OK with the registered user's info | upload file |
-| /login                     | POST   | Login a registered user                     | email and password                         | 200 OK with token and the user obj     |             |
-| /:id                       | GET    | Retrieve the user´s info by their unique id |                                            | 200 OK with all user's info            | isAuth      |
-| /add-favorite-event/:id    | PUT    | Add a favorite event to the logged user     | event id                                   | 200 OK with all updated user's info    | isAuth      |
-| /remove-favorite-event/:id | PUT    | Remove a favorite event to the logged user  | event id                                   | 200 OK with all updated user's info    | isAuth      |
-| /add-attend-event/:id      | PUT    | Add attend event to the logged user         | event id                                   | 200 OK with all updated user's info    | isAuth      |
-| /remove-attend-event/:id   | PUT    | Remove an attend event to the logged user   | event id                                   | 200 OK with all updated user's info    | isAuth      |
-| /logout                    | POST   | Logout the user from the application        |                                            | 200 OK with a successfull message      | isAuth      |
+| ENDPOINT                   | METHOD | DESCRIPTION                                                                                | REQUEST BODY                               | RESPONSE                               | MIDDLEWARE  |
+| -------------------------- | ------ | ------------------------------------------------------------------------------------------ | ------------------------------------------ | -------------------------------------- | ----------- |
+| /register                  | POST   | Register a new user                                                                        | username, password, email, profile picture | 200 OK with the registered user's info | upload file |
+| /login                     | POST   | Login a registered user                                                                    | email and password                         | 200 OK with token and the user obj     |             |
+| /:id                       | GET    | Retrieve the user´s info by their unique id                                                |                                            | 200 OK with all user's info            | isAuth      |
+| /add-favorite-event/:id    | PUT    | Add a favorite event to the logged user and add the attendee to the particular event       | event id                                   | 200 OK with all updated user's info    | isAuth      |
+| /remove-favorite-event/:id | PUT    | Remove a favorite event to the logged user and remove the attendee to the particular event | event id                                   | 200 OK with all updated user's info    | isAuth      |
+| /add-attend-event/:id      | PUT    | Add attend event to the logged user                                                        | event id                                   | 200 OK with all updated user's info    | isAuth      |
+| /remove-attend-event/:id   | PUT    | Remove an attend event to the logged user                                                  | event id                                   | 200 OK with all updated user's info    | isAuth      |
+| /logout                    | POST   | Logout the user from the application                                                       |                                            | 200 OK with a successfull message      | isAuth      |
 
 ## Events endpoint:
 
@@ -210,4 +210,4 @@ export const isTokenBlacklisted = (token) => {
 | /:id     | GET    | Retrieve the details of an event by their unique ID                                |                                     | 200 OK with the details of a particular event    | isAuth     |
 | /create  | POST   | Create a new event                                                                 | Event obj                           | 201 OK with all the info about the new event     | isAuth     |
 | /:id     | PUT    | Update an event by thier unique ID                                                 | Property of the event obj to update | 200 OK with all the info about the updated event | isAuth     |
-| /:id     | DELETE | Delete an event by their unique ID                                                 |                                     | 200 OK with a successfull message                | isAuth    |
+| /:id     | DELETE | Delete an event by their unique ID                                                 |                                     | 200 OK with a successfull message                | isAuth     |
