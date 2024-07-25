@@ -105,6 +105,7 @@ export const upload = multer({ storage });
 
 ```javascript
 import User from "../api/models/User.model.js";
+import { isTokenBlacklisted } from "../utils/blacklistToken.js";
 import { verifyToken } from "../utils/jtw.js";
 
 export const isAuth = async (req, res, next) => {
@@ -116,6 +117,10 @@ export const isAuth = async (req, res, next) => {
     }
 
     const parsedToken = token.replace("Bearer ", "");
+
+    if (isTokenBlacklisted(parsedToken)) {
+      return res.status(403).json("Forbidden!");
+    }
 
     const { id } = verifyToken(parsedToken);
 
@@ -133,7 +138,7 @@ export const isAuth = async (req, res, next) => {
 
 ### Utility functions
 
-I implemented two utility function, one for delete file from cloudinary, used when deleting an event, make sure that the file is also deleted in cloudinary, and the other one is for verity and generate the token.
+I implemented three utility functions, one for delete file from cloudinary, used when deleting an event, make sure that the file is also deleted in cloudinary, the other one is for verity and generate the token, and the last one is to set the token after the logout of the user in a blacklist.
 
 ## Delete file
 
@@ -167,12 +172,26 @@ export const verifyToken = (token) => {
 };
 ```
 
+## Blacklist token
+
+```javascript
+const blacklistedToken = new Set();
+
+export const blacklistToken = (token) => {
+  blacklistedToken.add(token);
+};
+
+export const isTokenBlacklisted = (token) => {
+  return blacklistedToken.has(token);
+};
+```
+
 ### Endpoints
 
 ## Users endpoint:
 
 | ENDPOINT                   | METHOD | DESCRIPTION                                 | REQUEST BODY                               | RESPONSE                               | MIDDLEWARE  |
-|----------------------------|--------|---------------------------------------------|--------------------------------------------|----------------------------------------|-------------|
+| -------------------------- | ------ | ------------------------------------------- | ------------------------------------------ | -------------------------------------- | ----------- |
 | /register                  | POST   | Register a new user                         | username, password, email, profile picture | 200 OK with the registered user's info | upload file |
 | /login                     | POST   | Login a registered user                     | email and password                         | 200 OK with token and the user obj     |             |
 | /:id                       | GET    | Retrieve the user´s info by their unique id |                                            | 200 OK with all user's info            | isAuth      |
@@ -180,15 +199,15 @@ export const verifyToken = (token) => {
 | /remove-favorite-event/:id | PUT    | Remove a favorite event to the logged user  | event id                                   | 200 OK with all updated user's info    | isAuth      |
 | /add-attend-event/:id      | PUT    | Add attend event to the logged user         | event id                                   | 200 OK with all updated user's info    | isAuth      |
 | /remove-attend-event/:id   | PUT    | Remove an attend event to the logged user   | event id                                   | 200 OK with all updated user's info    | isAuth      |
-| /logout                    |        |                                             |                                            |                                        |             |
+| /logout                    | POST   | Logout the user from the application        |                                            | 200 OK with a successfull message      | isAuth      |
 
 ## Events endpoint:
 
 | ENDPOINT | METHOD | DESCRIPTION                                                                        | REQUEST BODY                        | RESPONSE                                         | MIDDLEWARE |
-|----------|--------|------------------------------------------------------------------------------------|-------------------------------------|--------------------------------------------------|------------|
+| -------- | ------ | ---------------------------------------------------------------------------------- | ----------------------------------- | ------------------------------------------------ | ---------- |
 | /        | GET    | Retrieves all events available in the DB                                           |                                     | 200 OK with the list of available events         | isAuth     |
 | /search  | GET    | Retrieves all events that matches the condition with query and location parameters |                                     | 200 OK with the list of filtered events          | isAuth     |
 | /:id     | GET    | Retrieve the details of an event by their unique ID                                |                                     | 200 OK with the details of a particular event    | isAuth     |
 | /create  | POST   | Create a new event                                                                 | Event obj                           | 201 OK with all the info about the new event     | isAuth     |
 | /:id     | PUT    | Update an event by thier unique ID                                                 | Property of the event obj to update | 200 OK with all the info about the updated event | isAuth     |
-| /:id     | DELETE | Delete an event by their unique ID                                                 |                                     | 200 OK with a successfully message               | isAuth     |
+| /:id     | DELETE | Delete an event by their unique ID                                                 |                                     | 200 OK with a successfull message                | isAuth    |

@@ -1,6 +1,7 @@
 import User from "../models/User.model.js";
 import bcrypt from "bcrypt";
 import { generateToken } from "../../utils/jtw.js";
+import { blacklistToken } from "../../utils/blacklistToken.js";
 
 export const register = async (req, res, next) => {
   try {
@@ -255,3 +256,17 @@ export const removeAttendEvents = async (req, res, next) => {
     return next(error);
   }
 };
+
+export const logout =  async (req, res, next) => {
+  try {
+    const token = req.headers.authorization;
+
+    const parsedToken = token.replace("Bearer ", "");
+
+    blacklistToken(parsedToken);
+
+    return res.status(200).json({message: "User logged out successfully"});
+  } catch (error) {
+    return next(error);
+  }
+}

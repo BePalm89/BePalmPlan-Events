@@ -5,7 +5,8 @@ import {
   addFavoriteEvents,
   removeFavoriteEvents,
   addAttendEvents,
-  removeAttendEvents
+  removeAttendEvents,
+  logout
 } from "../controllers/user.controllers.js";
 import { upload } from "../../middleware/file.js";
 import express from "express";
@@ -32,5 +33,6 @@ router.put("/add-favorite-event/:id", isAuth, addFavoriteEvents);
 router.put("/remove-favorite-event/:id", isAuth, removeFavoriteEvents);
 router.put("/add-attend-event/:id", isAuth, addAttendEvents);
 router.put("/remove-attend-event/:id", isAuth, removeAttendEvents);
+router.post("/logout", isAuth, logout)
 
 export default router;

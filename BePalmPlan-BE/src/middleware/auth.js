@@ -1,4 +1,5 @@
 import User from '../api/models/User.model.js';
+import { isTokenBlacklisted } from '../utils/blacklistToken.js';
 import { verifyToken } from '../utils/jtw.js';
 
 export const isAuth = async ( req, res, next ) => {
@@ -10,6 +11,10 @@ export const isAuth = async ( req, res, next ) => {
         }
 
         const parsedToken = token.replace("Bearer ", "");
+
+        if (isTokenBlacklisted(parsedToken)) {
+            return res.status(403).json("Forbidden!");
+        }
 
         const { id } = verifyToken(parsedToken);
         
