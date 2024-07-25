@@ -209,5 +209,49 @@ export const isTokenBlacklisted = (token) => {
 | /search  | GET    | Retrieves all events that matches the condition with query and location parameters |                                     | 200 OK with the list of filtered events          | isAuth     |
 | /:id     | GET    | Retrieve the details of an event by their unique ID                                |                                     | 200 OK with the details of a particular event    | isAuth     |
 | /create  | POST   | Create a new event                                                                 | Event obj                           | 201 OK with all the info about the new event     | isAuth     |
-| /:id     | PUT    | Update an event by thier unique ID                                                 | Property of the event obj to update | 200 OK with all the info about the updated event | isAuth     |
+| /:id     | PUT    | Update an event by their unique ID                                                 | Property of the event obj to update | 200 OK with all the info about the updated event | isAuth     |
 | /:id     | DELETE | Delete an event by their unique ID                                                 |                                     | 200 OK with a successfull message                | isAuth     |
+
+### FE Implementation:
+
+## Landing page
+
+It is the landing page for the BePalmPlan website, there is a here box to describe what the user can do with the application, the list of category of the events, the list of popular cities and a list of benefit the use can experience if they sign up. They user can sign up, if he/she is not yet register, or the user can login directly.
+
+![Landing page](/Design/landing_page.png)
+
+## Register page
+
+It is a dialog where the user can register, entering a username, the email, the password and a profile picture. Call to the endpoint `/register`.
+
+![Register dialog](/Design/register.png)
+
+## Login page
+
+It is a dialog where the user need to enter the email and the password to be logged in the application. Call to the endpoint `/login`.
+
+![Login dialog](/Design/login.png)
+
+## Home page
+
+When the user is logged in, he/she will land to this page, it shows the event sorted by date. The user is able to filter by category, by the title of the event or the location. From the avatar, when clicking, there is a menu where the user can log out or land to the page where there are listed all the their events, favorite, hosting, attent or past. 
+
+![Home page](/Design/home_page.png)
+
+## Details page of the event
+
+Clicking on one of the event, the use navigate to this page to see the details of a particular event. If the event was created by the logger user, the user could see two button to edit or delete this event
+
+![Details event page](/Design/detail_event.png)
+
+## My event page
+
+In the page the user can see the list of the event is attending, hosting, favorite or past. The user is also able in this view to create a new event.
+
+![My event event page](/Design/hosting_event.png)
+
+## Create event dialog
+
+This is the dialog for creating a new event
+
+![Create event dialog](/Design/create_event.png)
