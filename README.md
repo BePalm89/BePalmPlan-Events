@@ -16,15 +16,15 @@ This project includes backend, with `node.js`, `express` and frontend with `vani
 - [x] Implement middleware that verifies the presence and validity of the token in protected routes.
 - [x] Protect routes that allow actions exclusive to authenticated users.
 - [x] File uploads (e.g., avatars or event posters).
-- [x] Controllers that sort information based on some criteria.
+- [ ] Controllers that sort information based on some criteria.
 - [x] Controllers that insert an element from one collection into another.
-- [x] Implement a login form for users to enter the system. If a user does not exist, register a new one. Registration logs in the user after registering to save an unnecessary step.
-- [x] Display a list of available events. Authenticated users will see additional options to create events and confirm attendance.
-- [x] Allow users to explore details of each event and the list of attendees.
-- [x] Implement proper error handling in the frontend and backend. All frontend forms have error control to inform the user of any issues.
-- [x] All asynchronous processes show a loading indicator to the user to provide immediate feedback.
-- [x] Focus on componentization, ensuring no code is repeated.
-- [x] Fetch requests are reused through a single function, allowing all fetches to be made using the same method.
+- [ ] Implement a login form for users to enter the system. If a user does not exist, register a new one. Registration logs in the user after registering to save an unnecessary step.
+- [ ] Display a list of available events. Authenticated users will see additional options to create events and confirm attendance.
+- [ ] Allow users to explore details of each event and the list of attendees.
+- [ ] Implement proper error handling in the frontend and backend. All frontend forms have error control to inform the user of any issues.
+- [ ] All asynchronous processes show a loading indicator to the user to provide immediate feedback.
+- [ ] Focus on componentization, ensuring no code is repeated.
+- [ ] Fetch requests are reused through a single function, allowing all fetches to be made using the same method.
 
 ### BE Implementation:
 
@@ -211,6 +211,10 @@ export const isTokenBlacklisted = (token) => {
 | /create  | POST   | Create a new event                                                                 | Event obj                           | 201 OK with all the info about the new event     | isAuth     |
 | /:id     | PUT    | Update an event by their unique ID                                                 | Property of the event obj to update | 200 OK with all the info about the updated event | isAuth     |
 | /:id     | DELETE | Delete an event by their unique ID                                                 |                                     | 200 OK with a successfull message                | isAuth     |
+
+## Deployment
+
+BE was deployed on vercel. the url is `https://be-palm-plan-events.vercel.app`
 
 ### FE Implementation:
 
