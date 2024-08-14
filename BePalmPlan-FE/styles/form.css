@@ -1,0 +1,111 @@
+.form-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  gap: var(--gap-xs);
+}
+
+.form-item label {
+  color: var(--gray-dark-color);
+}
+
+.form-item input:not([type="file"]) {
+  width: 100%;
+  height: 36px;
+  border-radius: var(--border-radius-xs);
+  border: 1px solid var(--gray-light-color);
+  outline: none;
+  padding: var(--padding-xs);
+  color: var(--black-color);
+  font-family: inherit;
+}
+
+.form-item input:focus {
+  border: 2px solid var(--primary-color);
+}
+
+.custom-file-upload {
+  display: inline-block;
+  padding: var(--padding-xs) var(--padding-s);
+  cursor: pointer;
+  background-color: var(--tertiary-color);
+  color: var(--white-color);
+  border-radius: var(--border-radius-s);
+  font-size: var(--font-size-s);
+  text-align: center;
+  border: none;
+  font-family: var(--font-family-heading);
+}
+
+.custom-file-upload:hover {
+  background-color: var(--secondary-color);
+}
+
+label.custom-file-upload {
+  color: var(--white-color);
+}
+
+#file-chosen {
+  margin-left: 10px;
+  font-size: var(--font-size-xs);
+  color: var(--gray-dark-color);
+}
+
+.error-message {
+  color: var(--error-color);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+}
+
+.form-item input:not([type="file"]).error-input {
+  border: 1px solid var(--error-color);
+}
+
+.search-input {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--gap-xs);
+  height: 36px;
+  padding: var(--padding-xs);
+  color: var(--black-color);
+  background-color: var(--white-color);
+  font-family: inherit;
+  border: 1px solid var(--gray-dark-color);
+}
+
+.search-input-events  {
+  border-top-left-radius: var(--border-radius-s);
+  border-bottom-left-radius: var(--border-radius-s);
+}
+
+.location-input-events {
+  border-left: none;
+  border-right: none;
+}
+
+.search-input input {
+  background-color: transparent;
+  outline: none;
+  border: none;
+  height: 36px;
+  font-family: inherit;
+}
+
+.search-input input::placeholder {
+  font-family: inherit;
+}
+
+.search-icon-container {
+  background-color: var(--tertiary-color);
+  height: 36px;
+  width: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid var(--gray-dark-color);
+  border-top-right-radius: var(--border-radius-s);
+  border-bottom-right-radius: var(--border-radius-s);
+  cursor: pointer;
+}

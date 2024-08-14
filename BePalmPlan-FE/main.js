@@ -1,24 +1,34 @@
-import './style.css'
-import javascriptLogo from './javascript.svg'
-import viteLogo from '/vite.svg'
-import { setupCounter } from './counter.js'
+import "./style.css";
+import { NavbarTemplate } from "./components/Navbar/Navbar";
+import { Footer } from "./components/Footer/Footer";
 
-document.querySelector('#app').innerHTML = `
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="${viteLogo}" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">
-      <img src="${javascriptLogo}" class="logo vanilla" alt="JavaScript logo" />
-    </a>
-    <h1>Hello Vite!</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite logo to learn more
-    </p>
-  </div>
-`
+import { router } from "./router/router";
+import { signUpModal } from "./utils/signUp.utils";
+import { loginModal } from './utils/login.utils';
+import { toggleMenu } from './utils/menu.utils';
+import { locationAutoSuggest } from "./utils/auto-suggest-location.utils";
+import { getAllEvents } from './utils/eventsList.utils';
 
-setupCounter(document.querySelector('#counter'))
+const divApp = document.querySelector("#app");
+
+const mainElement = document.createElement("main");
+
+divApp.innerHTML = '';
+
+divApp.appendChild(NavbarTemplate())
+
+divApp.appendChild(mainElement);
+
+divApp.innerHTML += Footer();
+
+router();
+
+signUpModal();
+
+loginModal();
+
+toggleMenu();
+
+locationAutoSuggest();
+
+getAllEvents();

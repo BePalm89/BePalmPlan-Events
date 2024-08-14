@@ -1,0 +1,16 @@
+#categories-container {
+    margin-top: var(--margin-s);
+    padding: var(--padding-s) var(--padding-m);
+}
+
+.categories-wrapper {
+    margin-top: var(--margin-l);
+    padding-bottom: var(--padding-s);
+    display: flex;
+    gap: var(--gap-l);
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-color: var(--primary-color) var(--white-color);
+    scrollbar-width: thin;
+}

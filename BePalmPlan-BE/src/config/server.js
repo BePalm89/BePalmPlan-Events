@@ -2,6 +2,7 @@ import express  from 'express';
 import cors from 'cors';
 import eventsRouter from '../api/routes/event.routes.js';
 import usersRouter from '../api/routes/user.routes.js';
+import locationRouter from '../api/routes/location.routes.js';
 
 const server = express();
 
@@ -12,6 +13,7 @@ server.use(express.urlencoded({extended: true}));
 
 server.use('/api/v1/events', eventsRouter);
 server.use('/api/v1/users', usersRouter);
+server.use('/api/v1/locations', locationRouter);
 
 server.use('*', ( req, res, next ) => {
     const error = new Error('Route not found');

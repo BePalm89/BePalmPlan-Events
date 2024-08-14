@@ -1,0 +1,11 @@
+.m-b-m {
+  margin-bottom: var(--margin-m);
+}
+
+.m-b-s {
+  margin-bottom: var(--margin-s);
+}
+
+.w-100 {
+  width: 100%;
+}

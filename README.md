@@ -28,7 +28,7 @@ This project includes backend, with `node.js`, `express` and frontend with `vani
 
 ### BE Implementation:
 
-We have two models: one for the users and one for the event.
+We have three models: one for the users, one for the event and one for the location.
 
 ## User model:
 
@@ -78,6 +78,27 @@ When registering and logging in the user, the library `bcrypt` is used to encryp
 ```
 
 The event model has a `createBy` field that is the user who created the event and an array of `attendees` to have a list of user that will attend that particular event.
+
+## Location model
+
+```javascript
+import mongoose from "mongoose";
+
+const locationSchema = new mongoose.Schema(
+  {
+    city: { type: String, required: true },
+    country: { type: String, required: true },
+  },
+  {
+    timestamps: true,
+    collection: "locations",
+  }
+);
+
+const Location = mongoose.model("locations", locationSchema, "locations");
+
+export default Location;
+```
 
 ### Middleware
 
@@ -186,6 +207,35 @@ export const isTokenBlacklisted = (token) => {
 };
 ```
 
+### Seeds
+
+### location.seed.js
+
+I implemented a seed for the location to insert at once a lot of location in the database, this endpoint will be use to simulate an autosuggest in the search bar.
+
+```javascript
+const locationDocuments = LOCATIONS.map((location) => new Location(location));
+
+export const locationSeeds = () => {
+  mongoose
+    .connect(process.env.DB_URL)
+    .then(async () => {
+      const allLocation = await Location.find();
+
+      if (allLocation.length) {
+        await Location.collection.drop();
+      }
+    })
+    .catch((err) => console.log(`Error deleting data: ${err}`))
+    .then(async () => {
+      await Location.insertMany(locationDocuments);
+      console.log("Collection created successfully!");
+    })
+    .catch((err) => console.log(`Error creating collection: ${err}`))
+    .finally(() => mongoose.disconnect());
+};
+```
+
 ### Endpoints
 
 ## Users endpoint:
@@ -211,6 +261,12 @@ export const isTokenBlacklisted = (token) => {
 | /create  | POST   | Create a new event                                                                 | Event obj                           | 201 OK with all the info about the new event     | isAuth     |
 | /:id     | PUT    | Update an event by their unique ID                                                 | Property of the event obj to update | 200 OK with all the info about the updated event | isAuth     |
 | /:id     | DELETE | Delete an event by their unique ID                                                 |                                     | 200 OK with a successfull message                | isAuth     |
+
+## Location endpoint
+
+| ENDPOINT | METHOD | DESCRIPTION                                                                        | REQUEST BODY                        | RESPONSE                                         | MIDDLEWARE |
+| -------- | ------ | ---------------------------------------------------------------------------------- | ----------------------------------- | ------------------------------------------------ | ---------- |
+| /search  | GET    | Retrieves all the location that matches the condition with city parameter          |                                     | 200 OK with the list of the filtered locations   | isAuth     |
 
 ## Deployment
 
@@ -238,7 +294,7 @@ It is a dialog where the user need to enter the email and the password to be log
 
 ## Home page
 
-When the user is logged in, he/she will land to this page, it shows the event sorted by date. The user is able to filter by category, by the title of the event or the location. From the avatar, when clicking, there is a menu where the user can log out or land to the page where there are listed all the their events, favorite, hosting, attent or past. 
+When the user is logged in, he/she will land to this page, it shows the event sorted by date. The user is able to filter by category, by the title of the event or the location. From the avatar, when clicking, there is a menu where the user can log out or land to the page where there are listed all the their events, favorite, hosting, attend or past.
 
 ![Home page](/Design/home_page.png)
 

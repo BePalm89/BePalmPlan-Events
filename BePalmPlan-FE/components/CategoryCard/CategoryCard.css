@@ -1,0 +1,29 @@
+.card-container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-s);
+    justify-content: center;
+    align-items: center;
+    padding: var(--padding-m);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.card-container.bgn-left {
+    background-image: url("/images/category-box-left.png");
+}
+
+.card-container.bgn-right {
+    background-image: url("/images/category-box-right.png");
+}
+
+.card-container h3 {
+    text-transform: capitalize;
+}
+
+.card-container:hover {
+    transform: scale(1.05);
+}
+

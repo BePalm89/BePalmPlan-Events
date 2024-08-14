@@ -1,0 +1,12 @@
+#cities-container {
+    margin-top: var(--margin-s);
+    padding: var(--padding-s) var(--padding-m);
+}
+
+.cities-wrapper {
+    margin-top: var(--margin-m);
+    display: flex;
+    justify-content: center;
+    gap: var(--gap-xl);
+    flex-wrap: wrap;
+}

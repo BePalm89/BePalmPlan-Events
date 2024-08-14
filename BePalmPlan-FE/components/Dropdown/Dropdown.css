@@ -1,0 +1,27 @@
+.dropdown-container {
+    position: relative;
+    width: max-content;
+    background-color: rebeccapurple; 
+}
+
+select {
+    border: 1px solid var(--gray-dark-color);
+    padding: var(--padding-xs);
+    background-color: var(--gray-light-color);
+    border-radius: var(--border-radius-l);
+    font-family: inherit;
+    color: var(--black-color);
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url('icons/close.png'); /* Path to your custom icon */
+    background-repeat: no-repeat;
+    background-position: right 0px center; /* Position the icon inside the dropdown */
+    background-size: 20px; /* Adjust the size of the icon */
+    min-width: max-content;
+    width: auto;
+}
+
+select::-ms-expand {
+    display: none;
+}

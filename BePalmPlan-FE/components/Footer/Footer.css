@@ -1,0 +1,22 @@
+footer {
+    background-color: var(--tertiary-color);
+}
+
+footer ul {
+    display: flex;
+    justify-content: center;
+    gap: var(--gap-m);
+    padding: var(--padding-s);
+}
+
+footer ul li a {
+    cursor: pointer;
+}
+
+footer ul li a img {
+    transition: transform 0.3s ease;
+}
+
+footer ul li a img:hover {
+    transform: scale(1.1) rotate(15deg);
+}

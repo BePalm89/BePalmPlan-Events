@@ -1,0 +1,24 @@
+.banner {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    padding: var(--padding-s);
+    width: clamp(300px, 60%, 800px);
+    border-radius: var(--border-radius-s);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+    border: 1px solid transparent;
+}
+
+.banner.error {
+    color: var(--error-banner-text);
+    background-color: var(--error-banner-bg);
+    border-color: var(--error-banner-border);
+}
+
+.banner.success {
+    color: var(--success-banner-text);
+    background-color: var(--success-banner-bg);
+    border-color: var(--success-banner-border); 
+}
