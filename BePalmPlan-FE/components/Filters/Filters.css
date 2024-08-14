@@ -1,0 +1,5 @@
+.filter-wrapper {
+    display: flex;
+    gap: var(--gap-m);
+    flex-wrap: wrap;
+}

@@ -5,11 +5,9 @@ import { FILTERS } from './Filters.data';
 export const Filters = () => {
     
     return `
-    <div>
+    <div class="filter-wrapper">
         ${FILTERS.map((filter) => {
             return `${Dropdown(filter.name, filter.options)}`
             }).join("")}
     </div>`
 }
-
-// `<div>${Dropdown("date", dateOptions)}</div>`

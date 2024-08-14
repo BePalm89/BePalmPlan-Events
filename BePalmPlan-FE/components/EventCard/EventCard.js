@@ -1,5 +1,9 @@
 import './EventCard.css';
 
+import { ButtonLink } from '../Button/Button';
+
+import { formatDate } from '../../utils/format.utils';
+
 export const EventCard = (event) => {
     return `
     <div class="event-card-container">
@@ -8,8 +12,11 @@ export const EventCard = (event) => {
         </div>
         <div class="event-card-body">
             <h4>${event.title}</h4>
-            <p>${event.description}</p>
-            <p><span>${event.date}</span> <span>${event.location}</span></p>
+            <p class="description">${event.description}</p>
+            <p class="info"><span>${formatDate(event.date)}</span> <span>${event.location}</span></p>
+        </div>
+        <div>
+        ${ButtonLink("See the events", "secondary")}
         </div>
     </div>`
 } 

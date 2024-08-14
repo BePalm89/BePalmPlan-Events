@@ -32,3 +32,6 @@ toggleMenu();
 locationAutoSuggest();
 
 getAllEvents();
+
+
+

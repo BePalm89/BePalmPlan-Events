@@ -1,0 +1,5 @@
+textarea {
+    width: 100%;
+    border: 1px solid var(--gray-light-color);
+    border-radius: var(--border-radius-xs);
+}

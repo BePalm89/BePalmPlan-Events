@@ -1,27 +1,76 @@
-.dropdown-container {
-    position: relative;
-    width: max-content;
-    background-color: rebeccapurple; 
+.dropdown-wrapper {
+  position: relative;
+  padding: var(--padding-xs) var(--padding-s);
+  background-color: var(--gray-light-color);
+  border-radius: var(--border-radius-xl);
+  cursor: pointer;
+  outline: none;
+  color: var(--black-color);
 }
 
-select {
-    border: 1px solid var(--gray-dark-color);
-    padding: var(--padding-xs);
-    background-color: var(--gray-light-color);
-    border-radius: var(--border-radius-l);
-    font-family: inherit;
-    color: var(--black-color);
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    background-image: url('icons/close.png'); /* Path to your custom icon */
-    background-repeat: no-repeat;
-    background-position: right 0px center; /* Position the icon inside the dropdown */
-    background-size: 20px; /* Adjust the size of the icon */
-    min-width: max-content;
-    width: auto;
+#date-dropdown-wrapper {
+    width: 150px;
 }
 
-select::-ms-expand {
-    display: none;
+#type-dropdown-wrapper {
+    width: 140px;
+}
+
+#category-dropdown-wrapper {
+    width: 230px;
+}
+
+#sorting-dropdown-wrapper {
+    width: 210px;
+}
+
+.dropdown-wrapper span {
+  margin-right: 20px;
+  font-size: var(--font-size-s);
+}
+
+.dropdown-wrapper:after {
+  content: "";
+  width: 0;
+  height: 0;
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  margin-top: -3px;
+  border-width: 6px 6px 0 6px;
+  border-style: solid;
+  border-color: var(--black-color) transparent;
+}
+
+.dropdown-wrapper.is-active:after {
+  transform: rotate(180deg);
+}
+
+.dropdown-wrapper.is-active .dropdown-list {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  max-height: fit-content;
+}
+
+.dropdown-wrapper.is-active .dropdown-list li {
+    padding: var(--padding-xs) var(--padding-s);
+}
+.dropdown-wrapper.is-active .dropdown-list li:hover {
+    background-color: var(--secondary-color);
+}
+
+.dropdown-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: var(--white-color);
+  border-radius: 0 0 5px 5px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-top: none;
+  border-bottom: none;
+  list-style: none;
+  transition: all 0.3s ease-out;
+  max-height: 0;
+  overflow: hidden;
+  z-index: 1;
 }
