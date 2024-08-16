@@ -37,7 +37,7 @@ export const eventListTemplate = (data) => {
 
 };
 
-const handleDropdownToggle = (dropdownName) => {
+export const handleDropdownToggle = (dropdownName) => {
   const rootStyle = getComputedStyle(document.documentElement);
   
   const dropdownElement = document.querySelector(`#${dropdownName}-dropdown-wrapper`);

@@ -7,7 +7,7 @@ export const Filters = () => {
     return `
     <div class="filter-wrapper">
         ${FILTERS.map((filter) => {
-            return `${Dropdown(filter.name, filter.options)}`
+            return `${Dropdown(filter.name, filter.options, 'filter-dropdown-wrapper')}`
             }).join("")}
     </div>`
 }

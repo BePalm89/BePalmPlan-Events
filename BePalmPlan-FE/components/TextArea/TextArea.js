@@ -1,17 +1,16 @@
-import { toTitleCase } from '../../utils/format.utils';
 import './TextArea.css';
+
+import { required } from '../../utils/form.utils';
+import { toTitleCase, formattedId } from '../../utils/format.utils';
 
 export const TextArea = (name, rows, cols, isRequired) => {
     
-    const formattedName = name.includes("") ? name.replaceAll(" ", "-") : name;
-
-    const required = isRequired ? '*' : '';
 
     return `
         <div class="form-item">
-            <label for="${formattedName}">${toTitleCase(name)} ${required}</label>
-            <textarea id="${formattedName}" rows="${rows}" cols="${cols}"></textarea>
-            <span class="error-message" id="${formattedName}-error"></span>
+            <label for="${formattedId(name)}">${toTitleCase(name)} ${required(isRequired)}</label>
+            <textarea id="${formattedId(name)}" rows="${rows}" cols="${cols}"></textarea>
+            <span class="error-message" id="${formattedId(name)}-error"></span>
         </div>
     `
 }

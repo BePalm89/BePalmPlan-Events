@@ -3,9 +3,10 @@ import { API_ENDPOINTS } from "./url.enum";
 
 export const locationAutoSuggest = () => {
   const locationInput = document.querySelector("#locations");
+
   if(locationInput) {
-      const suggestionsList = document.querySelector(".suggestions-list");
-      const suggestionsContainer = document.querySelector(".suggestions-container");
+      const suggestionsList = document.querySelector(`.suggestions-list`);
+      const suggestionsContainer = document.querySelector(`.suggestions-container`);
     
       const debouncedHandleSearch = debounce(handleSearch, 1000);
     
@@ -88,3 +89,19 @@ const highlightText = (text, query) => {
   const regex = new RegExp(`(${query})`, "gi");
   return text.replace(regex, "<strong>$1</strong>");
 };
+
+
+export const locationAutoSuggestEvents = ()  => { 
+  const locationInput = document.querySelector("#locations-event");
+
+  if(locationInput) {
+    const suggestionsList = document.querySelector(".suggestions-location-list");
+    const suggestionsContainer = document.querySelector(".suggestions-location-container");
+    
+    const debounceHandleSearch = debounce(handleSearch, 1000);
+
+    locationInput.addEventListener("input", (event) => {
+      debounceHandleSearch(event, suggestionsList, suggestionsContainer)
+    })
+  }
+}

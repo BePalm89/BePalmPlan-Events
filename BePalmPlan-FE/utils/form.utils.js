@@ -90,3 +90,20 @@ export const isFormValid = (inputs, validationRules) => {
 
   return isValid;
 };
+
+export const required = (isRequired) => {
+  return isRequired ? '*' : '';
+}
+
+export const selectFile = (formId, inputId) => {
+  const photoInput = document.querySelector(`#${formId} #${inputId}`);
+  const fileChosenText = document.querySelector(`#${formId} #file-chosen`);
+
+  photoInput.addEventListener("change", () => {
+    if(photoInput.files.length > 0) {
+      fileChosenText.textContent = photoInput.files[0].name;
+    } else {
+      fileChosenText.textContent = "No file chosen";
+    }
+  })
+}

@@ -7,6 +7,7 @@ import {
   removeErrorToInput,
   handlePasswordInput,
   isFormValid,
+  selectFile,
 } from "./form.utils";
 import { login, makeRequest } from "./fetch.utils";
 import { LoginTemplate } from "../pages/Login/Login";
@@ -39,10 +40,10 @@ export const setupFormEventListeners = (mainElement) => {
     username: document.querySelector("#username"),
     email: document.querySelector("#email"),
     password: document.querySelector("#password"),
-    profileImg: document.querySelector("#profile-pic"),
+    profileImg: document.querySelector("#profile-picture"),
   };
 
-  selectFile();
+  selectFile("form-register", "profile-picture");
 
   closeModal(mainElement);
 
@@ -64,20 +65,6 @@ export const setupFormEventListeners = (mainElement) => {
     handleRedirectionToLogin(mainElement)
   );
 };
-
-const selectFile = () => {
-  const profileImgInput = document.querySelector("#profile-pic");
-  const fileChosenText = document.querySelector("#file-chosen");
-
-  profileImgInput.addEventListener("change", () => {
-    if (profileImgInput.files.length > 0) {
-      fileChosenText.textContent = profileImgInput.files[0].name;
-    } else {
-      fileChosenText.textContent = "No file chosen";
-    }
-  });
-};
-
 const handleRegister = async (event, inputs, mainElement) => {
   event.preventDefault();
 

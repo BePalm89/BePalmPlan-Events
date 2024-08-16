@@ -32,3 +32,7 @@ export const ISODate = (dateString) => {
 
   return isoString
 }
+
+export const formattedId = (name) => {
+  return name.includes("") ? name.replaceAll(" ", "-") : name;
+}

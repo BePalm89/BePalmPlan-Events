@@ -1,8 +1,26 @@
+.dropdown-label {
+  text-align: left;
+  color: var(--gray-dark-color);
+}
+
 .dropdown-wrapper {
   position: relative;
   padding: var(--padding-xs) var(--padding-s);
+  cursor: pointer;
+  outline: none;
+  color: var(--black-color);
+}
+
+.filter-dropdown-wrapper {
   background-color: var(--gray-light-color);
   border-radius: var(--border-radius-xl);
+}
+
+.form-dropdown-wrapper {
+  position: relative;
+  padding: var(--padding-xs) var(--padding-s);
+  border-radius: var(--border-radius-s);
+  border: 1px solid var(--gray-light-color);
   cursor: pointer;
   outline: none;
   color: var(--black-color);

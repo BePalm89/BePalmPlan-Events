@@ -4,7 +4,7 @@ import "../../styles/utilities.css";
 
 import { Logo } from "../../components/Logo/Logo";
 import { Button, ButtonLink } from "../../components/Button/Button";
-import { setupEventListeners } from "../../utils/login.utils";
+import { Input } from "../../components/Input/Input";
 
 export const LoginTemplate = () => {
   const modalContainer = document.createElement("div");
@@ -19,6 +19,7 @@ export const LoginTemplate = () => {
 
 
 const loginModalTemplate = () => {
+    Input
     return `
     <div class="modal-content">
         <div class="close-icon-container">
@@ -29,16 +30,8 @@ const loginModalTemplate = () => {
         <p class="m-b-s">Not a member? ${ButtonLink('sign up')}</p>
         <form id="form-login" novalidate>
             <div class="m-b-m login-form">
-                <div class="form-item">
-                    <label for="email">Email: *</label>
-                    <input id="email" type="text">
-                    <span class="error-message" id="email-error"></span>
-                </div>
-                <div class="form-item">
-                    <label for="password">Password: *</label>
-                    <input id="password" type="password">
-                    <span class="error-message" id="password-error"></span>
-                </div>
+            ${Input("email", true, "email" )}
+            ${Input("password", true, "password")}
             </div>
             ${Button("login", "filled", true)}
         </form>

@@ -1,11 +1,17 @@
 import "./CreateEvent.css";
 
+import { ISODate } from "../../utils/format.utils";
+
 import { Logo } from "../../components/Logo/Logo";
 import { Title } from "../../components/Title/Title";
 import { Input } from "../../components/Input/Input";
 import { TextArea } from "../../components/TextArea/TextArea";
 import { DatePicker } from "../../components/DatePicker/DatePicker";
-import { ISODate } from "../../utils/format.utils";
+import { InputFile } from "../../components/InputFile/InputFile";
+import { Dropdown } from "../../components/Dropdown/Dropdown";
+import { FILTERS } from "../../components/Filters/Filters.data";
+import { Autosuggest } from "../../components/Autosuggest/Autosuggest";
+import { Button } from "../../components/Button/Button";
 
 export const CreateEventTemplate = () => {
   const modalContainer = document.createElement("div");
@@ -19,9 +25,11 @@ export const CreateEventTemplate = () => {
 };
 
 const createEventModalTemplate = () => {
-    
+
+  const categoryOption = FILTERS.find((filter) => filter.name === 'category');
+
   const today = new Date();
-  console.log(today);
+
   return `
     <div class="modal-content">
         <div class="close-icon-container">
@@ -33,10 +41,12 @@ const createEventModalTemplate = () => {
             <div class="m-b-m create-event-form m-t-s">
                 ${Input("title", true)}
                 ${TextArea("description", 4, 50, true)}
+                ${Dropdown("categories", categoryOption.options, "form-dropdown-wrapper", true, "Category", true)}
+                ${Autosuggest("location", true, true)}
                 ${DatePicker("when", ISODate(today), true)}
-                ${Input("description", true)}
-                ${Input("location", true)}
+                ${InputFile("upload photo", true)}
             </div>
+            ${Button("create", "filled", true)}
         </form>
     </div>`;
 };

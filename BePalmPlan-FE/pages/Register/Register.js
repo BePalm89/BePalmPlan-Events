@@ -5,6 +5,8 @@ import "../../styles/utilities.css";
 
 import { Button, ButtonLink } from "../../components/Button/Button";
 import { Logo } from "../../components/Logo/Logo";
+import { Input } from "../../components/Input/Input";
+import { InputFile } from "../../components/InputFile/InputFile";
 
 export const RegisterTemplate = () => {
   const modalContainer = document.createElement("div");
@@ -17,6 +19,7 @@ export const RegisterTemplate = () => {
 };
 
 const registerModalTemplate = () => {
+    
   return `
     <div class="modal-content">
         <div class="close-icon-container">
@@ -27,29 +30,10 @@ const registerModalTemplate = () => {
         <p class="m-b-s">Already a member? ${ButtonLink('login')}</p>
         <form id="form-register" novalidate>
         <div class="m-b-m register-form">
-            <div class="form-item">
-                <label for="username">Username: *</label>
-                <input id="username" type="text">
-                <span class="error-message" id="username-error"></span>
-            </div>
-            <div class="form-item">
-                <label for="email">Email: *</label>
-                <input id="email" type="text">
-                <span class="error-message" id="email-error"></span>
-            </div>
-            <div class="form-item">
-                <label for="password">Password: *</label>
-                <input id="password" type="password">
-                <span class="error-message" id="password-error"></span>
-            </div>
-            <div class="form-item">
-                <label for="profile-pic">Profile picture:</label>
-                <input id="profile-pic" type="file" style="display: none;">
-                <div>
-                    <label for="profile-pic" class="custom-file-upload">Choose File</label>
-                    <span id="file-chosen">No file chosen</span>
-                </div>
-            </div> 
+            ${Input("username", true)}
+            ${Input("email", true, "email")}
+            ${Input("password", true, "password")}
+            ${InputFile("profile picture")}
         </div>
         ${Button("Sign up", "filled", true)}
         </form>
