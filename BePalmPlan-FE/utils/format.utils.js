@@ -28,7 +28,7 @@ export const ISODate = (dateString) => {
   const timeZoneOffset = date.getTimezoneOffset() * 60000;
   const localDate = new Date(date.getTime() - timeZoneOffset);
 
-  const isoString = localDate.toISOString().slice(0, 19);
+  const isoString = localDate.toISOString().slice(0, 16);
 
   return isoString
 }

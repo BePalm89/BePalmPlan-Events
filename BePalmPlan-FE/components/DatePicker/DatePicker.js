@@ -1,16 +1,14 @@
 import './DatePicker.css';
 
 import { required } from '../../utils/form.utils';
-import { ISODate, toTitleCase, formattedId } from '../../utils/format.utils';
+import { toTitleCase, formattedId } from '../../utils/format.utils';
 
-const today = new Date();
-
-export const DatePicker = (name, min, isRequired ,value = ISODate(today)) => {
+export const DatePicker = (name, min, isRequired) => {
    
     return `
         <div class="form-item">
             <label for="${formattedId(name)}">${toTitleCase(name)} ${required(isRequired)}</label>
-            <input type="datetime-local" id="${formattedId(name)}" value="${value}" min="${min}"/>
+            <input type="datetime-local" id="${formattedId(name)}" min="${min}"/>
             <span class="error-message" id="${formattedId(name)}-error"></span>
         </div>
     `

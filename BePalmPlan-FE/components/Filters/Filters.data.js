@@ -21,7 +21,7 @@ export const FILTERS = [
     {
         name: 'category',
         options: [
-            { label: 'any category', value: ''},
+            { label: 'any categories', value: ''},
             { label: 'health and wellbeing', value:'health-wellbeing'},
             { label: 'art and culture', value:'art-culture'},
             { label: 'travel and outdoor', value:'travel-outdoor'},
@@ -38,6 +38,4 @@ export const FILTERS = [
             { label: 'sort by: relevance', value:'relevance'},
         ]
     },
-
-
 ]

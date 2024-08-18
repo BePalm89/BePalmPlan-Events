@@ -21,6 +21,8 @@
   flex-direction: column;
   gap: var(--gap-xs);
   padding: var(--padding-m);
+  height: 80vh;
+  overflow-y: auto;
 }
 
 .close-icon-container {
@@ -40,4 +42,19 @@
 
 .modal-content h2 {
   text-transform: uppercase;
+}
+
+
+.modal-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.modal-content::-webkit-scrollbar-track {
+  background: var(--white-color); 
+  border-radius: var(--border-radius-xs);
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+  background: var(--tertiary-color);
+  border-radius: var(--border-radius-xs);
 }

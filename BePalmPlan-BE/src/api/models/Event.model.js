@@ -9,7 +9,7 @@ const eventSchema = new mongoose.Schema(
     category: {
       type: String,
       required: true,
-      enum: ["hobbies", "art", "health", "travel", "sport", "social", "tech"],
+      enum: ["hobbies-passions", "art-culture", "health-wellbeing", "travel-outdoor", "sport-fitness", "social-activities", "technology"],
     },
     attendees: [
       {

@@ -12,11 +12,7 @@ import {
 import { login, makeRequest } from "./fetch.utils";
 import { LoginTemplate } from "../pages/Login/Login";
 import { setupEventListeners as setupEventListenersLogin } from "./login.utils";
-
-const URLS = {
-  URL_REGISTER_USER: "http://localhost:3000/api/v1/users/register",
-  URL_LOGIN_USER: "http://localhost:3000/api/v1/users/login",
-};
+import { API_ENDPOINTS } from "./url.enum";
 
 export const signUpModal = () => {
   const btn = document.querySelector("#sign-up");
@@ -89,7 +85,7 @@ const handleRegister = async (event, inputs, mainElement) => {
 
   try {
     const { status, data } = await makeRequest(
-      URLS.URL_REGISTER_USER,
+      API_ENDPOINTS.REGISTER_USER,
       "POST",
       formData
     );

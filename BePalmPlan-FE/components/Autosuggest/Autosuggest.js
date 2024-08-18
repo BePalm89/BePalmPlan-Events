@@ -6,18 +6,19 @@ export const Autosuggest = (name, isRequired, hasLabel = false) => {
   return `
   <div class="autosuggest-container">
     <div class="form-item">
-                ${
-                  hasLabel
-                    ? `<label for="${formattedId(name)}">${toTitleCase(
-                        name
-                      )} ${required(isRequired)}</label> `
-                    : ""
-                }
-            <input type="text" id="locations-event"/>
-        </div>
-        <div class="suggestions-location-container">
-            <ul class="suggestions-location-list"></ul>
-        </div>
+      ${
+        hasLabel
+          ? `<label for="${formattedId(name)}">${toTitleCase(name)} ${required(
+              isRequired
+            )}</label> `
+          : ""
+      }
+      <input type="text" id="locations-event"/>
+      <span class="error-message" id="${formattedId(name)}-error"></span>
+    </div>
+    <div class="suggestions-location-container">
+      <ul class="suggestions-location-list"></ul>
+    </div>
   </div>      
 
     `;

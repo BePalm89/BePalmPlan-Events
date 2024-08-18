@@ -10,7 +10,6 @@ import { DatePicker } from "../../components/DatePicker/DatePicker";
 import { InputFile } from "../../components/InputFile/InputFile";
 import { Dropdown } from "../../components/Dropdown/Dropdown";
 import { FILTERS } from "../../components/Filters/Filters.data";
-import { Autosuggest } from "../../components/Autosuggest/Autosuggest";
 import { Button } from "../../components/Button/Button";
 
 export const CreateEventTemplate = () => {
@@ -25,8 +24,22 @@ export const CreateEventTemplate = () => {
 };
 
 const createEventModalTemplate = () => {
+  const categoryOption = FILTERS.find((filter) => filter.name === "category");
 
-  const categoryOption = FILTERS.find((filter) => filter.name === 'category');
+  const whereOption = {
+    name: "where",
+    options: [
+      { label: "any where", value: "" },
+      {
+        label: "online",
+        value: "online",
+      },
+      {
+        label: "In person",
+        value: "in-person",
+      },
+    ],
+  };
 
   const today = new Date();
 
@@ -41,8 +54,25 @@ const createEventModalTemplate = () => {
             <div class="m-b-m create-event-form m-t-s">
                 ${Input("title", true)}
                 ${TextArea("description", 4, 50, true)}
-                ${Dropdown("categories", categoryOption.options, "form-dropdown-wrapper", true, "Category", true)}
-                ${Autosuggest("location", true, true)}
+                ${Dropdown(
+                  "categories",
+                  categoryOption.options,
+                  "form-dropdown-wrapper",
+                  true,
+                  "Category",
+                  true
+                )}
+                ${Dropdown(
+                  "where",
+                  whereOption.options,
+                  "form-dropdown-wrapper",
+                  true,
+                  "Where",
+                  true
+                )}
+                <div id="autosuggest-locations-wrapper">      
+    
+                </div>
                 ${DatePicker("when", ISODate(today), true)}
                 ${InputFile("upload photo", true)}
             </div>

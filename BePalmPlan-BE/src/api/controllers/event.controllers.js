@@ -2,8 +2,11 @@ import { deleteFile } from "../../utils/deleteFile.js";
 import Event from "../models/Event.model.js";
 
 export const getAllEvents = async (req, res, next) => {
+
+  const today = new Date();
+
   try {
-    const events = await Event.find();
+    const events = await Event.find({ date: {$gte: today}}).sort({date: 1});
     res.status(200).json(events);
   } catch (error) {
     return next(error);

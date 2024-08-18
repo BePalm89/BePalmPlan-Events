@@ -1,5 +1,6 @@
 import { Banner } from "../components/Banner/Banner";
 import { handleNavbarWhenNavigate, navigateTo } from "../router/router";
+import { getAllEvents } from "./eventsList.utils";
 import { toggleMenu } from "./menu.utils";
 import { API_ENDPOINTS } from "./url.enum";
 
@@ -14,7 +15,6 @@ export const makeRequest = async (
     body,
     headers,
   };
-
   try {
     const res = await fetch(url, options);
 
@@ -51,6 +51,8 @@ export const login = async (email, password, mainElement) => {
       handleNavbarWhenNavigate();
 
       toggleMenu();
+
+      getAllEvents();
 
     } else if (status === 401) {
       mainElement.appendChild(Banner(data, "ERROR"));

@@ -4,6 +4,7 @@
   flex-direction: column;
   gap: var(--gap-xs);
   color: var(--gray-dark-color);
+  position: relative;
 }
 
 .event-card-img-container {
@@ -134,4 +135,14 @@
 
 .description {
     text-align: justify;
+}
+
+.online {
+  background-color: var(--primary-color);
+  position: absolute;
+  top: 250px;
+  right: -10px;
+  padding: var(--padding-xs) var(--padding-s);
+  border-radius:  var(--border-radius-xs);
+  color: var(--white-color);
 }
