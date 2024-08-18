@@ -1,3 +1,7 @@
+.action-header {
+    display: flex;
+    justify-content: space-between;
+}
 .filter-wrapper {
     display: flex;
     gap: var(--gap-m);

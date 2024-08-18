@@ -5,15 +5,23 @@ import { EventsSection } from "../components/EventsSection/EventsSection";
 import { createEventModal } from "./create-event.utils";
 import { Autosuggest } from "../components/Autosuggest/Autosuggest";
 import { locationAutoSuggestEvents } from "./auto-suggest-location.utils";
+import { DEBOUNCE_TIME, debounce } from "./debounce.utils";
 
-export const getAllEvents = async () => {
+export const getAllEvents = async (params = null) => {
   const headers = {
     "Content-Type": "application/json",
     Authorization: `Bearer ${localStorage.getItem("token")}`,
   };
 
+  let endpoint = API_ENDPOINTS.GET_ALL_EVENTS;
+
+  const queryString = new URLSearchParams(params).toString();
+  if(params) {
+    endpoint = `${API_ENDPOINTS.SEARCH_EVENT}?${queryString}`;
+  } 
+
   const { status, data } = await makeRequest(
-    API_ENDPOINTS.GET_ALL_EVENTS,
+    endpoint,
     "GET",
     null,
     headers
@@ -99,3 +107,21 @@ export const handleDropdownToggle = (dropdownName) => {
     });
   });
 };
+
+export const searchByText = () => {
+
+  const queryInput = document.querySelector("#search-text");
+
+  const debounceSearch = debounce((event) => {
+    handleSearchByText(event)
+  }, DEBOUNCE_TIME)
+
+  queryInput.addEventListener("input", debounceSearch);
+};
+
+const handleSearchByText = (event) => {
+  const locationInput = document.querySelector("#locations");
+  const location = locationInput.value
+  const query = event.target.value;
+  getAllEvents({query, location});
+}

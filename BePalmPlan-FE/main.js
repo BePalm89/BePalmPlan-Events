@@ -7,7 +7,7 @@ import { signUpModal } from "./utils/signUp.utils";
 import { loginModal } from './utils/login.utils';
 import { toggleMenu } from './utils/menu.utils';
 import { locationAutoSuggest } from "./utils/auto-suggest-location.utils";
-import { getAllEvents } from './utils/eventsList.utils';
+import { getAllEvents, searchByText } from './utils/eventsList.utils';
 
 const divApp = document.querySelector("#app");
 
@@ -32,6 +32,8 @@ toggleMenu();
 locationAutoSuggest();
 
 getAllEvents();
+
+searchByText();
 
 
 
