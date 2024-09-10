@@ -1,5 +1,5 @@
 import { DEBOUNCE_TIME, debounce } from "./debounce.utils";
-import { getAllEvents } from "./eventsList.utils";
+import { getAllEvents, handleAllDropdown } from "./eventsList.utils";
 import { makeRequest } from "./fetch.utils";
 import { API_ENDPOINTS } from "./url.enum";
 
@@ -54,7 +54,7 @@ const handleSearch = async (event, suggestionsList, suggestionsContainer, locati
   if (query.length === 0) {
     suggestionsContainer.classList.remove("show");
     suggestionsList.innerHTML = "";
-    spanError.innerHTML = "This field is required";
+    if(spanError) spanError.innerHTML = "This field is required";
     locationInput.style.border = `1px solid ${rootStyle.getPropertyValue(
       "--error-color"
     )}`;
@@ -128,7 +128,10 @@ const useSuggestion = (event, locationInput, suggestionsList, suggestionsContain
   const queryInput = document.querySelector("#search-text");
   const query = queryInput.value;
 
-  if(isAFilter) getAllEvents({query, location});
+  if(isAFilter) {
+    getAllEvents({query, location});
+    handleAllDropdown();
+  } 
 };
 
 const highlightText = (text, query) => {

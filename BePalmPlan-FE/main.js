@@ -35,5 +35,3 @@ getAllEvents();
 
 searchByText();
 
-
-

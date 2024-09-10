@@ -2,11 +2,12 @@ import { deleteFile } from "../../utils/deleteFile.js";
 import Event from "../models/Event.model.js";
 
 export const getAllEvents = async (req, res, next) => {
-
   const today = new Date();
 
   try {
-    const events = await Event.find({ date: {$gte: today}}).sort({date: 1});
+    const events = await Event.find({ date: { $gte: today } }).sort({
+      date: 1,
+    });
     res.status(200).json(events);
   } catch (error) {
     return next(error);
@@ -53,8 +54,18 @@ export const createNewEvent = async (req, res, next) => {
 };
 
 export const searchEvents = async (req, res, next) => {
+  const allowedCategories = [
+    "hobbies-passions",
+    "art-culture",
+    "health-wellbeing",
+    "travel-outdoor",
+    "sport-fitness",
+    "social-activities",
+    "technology",
+  ];
+
   try {
-    const { query, location } = req.query;
+    const { query, location, category } = req.query;
 
     let searchCriteria = {};
 
@@ -64,6 +75,14 @@ export const searchEvents = async (req, res, next) => {
 
     if (location) {
       searchCriteria.location = { $regex: location, $options: "i" };
+    }
+
+    if (category) {
+      if (allowedCategories.includes(category)) {
+        searchCriteria.category = category;
+      } else {
+        return res.status(400).json("Invalid category filter");
+      }
     }
 
     const filteredEvents = await Event.find(searchCriteria);
@@ -94,12 +113,11 @@ export const updateEvent = async (req, res, next) => {
       deleteFile(oldEvent.imgEvent);
     }
 
-
     const modifiedEvent = new Event(req.body);
 
     modifiedEvent._id = id;
 
-    if(req.file) {
+    if (req.file) {
       modifiedEvent.imgEvent = req.file.path;
     }
 
@@ -121,8 +139,8 @@ export const deleteEvent = async (req, res, next) => {
 
     const oldEvent = await Event.findById(id);
 
-    if(!oldEvent) {
-        return res.status(404).json("Event not found!");
+    if (!oldEvent) {
+      return res.status(404).json("Event not found!");
     }
 
     if (oldEvent.createBy.toString() !== loggedUserId.toString()) {
@@ -137,7 +155,6 @@ export const deleteEvent = async (req, res, next) => {
     deleteFile(deletedEvent.imgEvent);
 
     return res.status(200).json("Event deleted successfully");
-
   } catch (error) {
     return next(error);
   }

@@ -36,3 +36,7 @@ export const ISODate = (dateString) => {
 export const formattedId = (name) => {
   return name.includes("") ? name.replaceAll(" ", "-") : name;
 }
+
+export const formatCategory = (category) => {
+  return category.toLowerCase().replaceAll(" ", "-").replace("-and-", "-");
+}
