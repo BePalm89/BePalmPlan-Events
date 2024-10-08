@@ -13,6 +13,7 @@ import { login, makeRequest } from "./fetch.utils";
 import { LoginTemplate } from "../pages/Login/Login";
 import { setupEventListeners as setupEventListenersLogin } from "./login.utils";
 import { API_ENDPOINTS } from "./url.enum";
+import { Spinner } from "../components/Spinner/Spinner";
 
 export const signUpModal = () => {
   const btn = document.querySelector("#sign-up");
@@ -76,6 +77,9 @@ const handleRegister = async (event, inputs, mainElement) => {
 
   if (!isValid) return;
 
+  const spinner = Spinner();
+  mainElement.appendChild(spinner);
+
   const formData = new FormData();
 
   formData.append("username", username.value);
@@ -93,6 +97,10 @@ const handleRegister = async (event, inputs, mainElement) => {
     handleRegisterResponse(status, data, inputs, mainElement);
   } catch (error) {
     console.log(error);
+  } finally {
+    if(spinner) {
+      spinner.remove();
+    }
   }
 };
 

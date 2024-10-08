@@ -1,3 +1,4 @@
+import { Spinner } from "../components/Spinner/Spinner";
 import { LoginTemplate } from "../pages/Login/Login";
 import { RegisterTemplate } from "../pages/Register/Register";
 import { login } from "./fetch.utils";
@@ -62,6 +63,9 @@ const handleLogin = async (event, inputs, mainElement) => {
 
   if (!isValid) return;
 
+  const spinner = Spinner();
+  mainElement.appendChild(spinner);
+
   const email = inputs.email.value;
   const password = inputs.password.value;
 
@@ -69,6 +73,10 @@ const handleLogin = async (event, inputs, mainElement) => {
     await login(email, password, mainElement);
   } catch (error) {
     console.log(error);
+  } finally {
+    if(spinner) {
+      spinner.remove();
+    }
   }
 };
 

@@ -1,4 +1,5 @@
 import { Banner } from "../components/Banner/Banner";
+import { Spinner } from "../components/Spinner/Spinner";
 import { CreateEventTemplate } from "../pages/CreateEvent/CreateEvent";
 
 import { locationAutoSuggestEvents } from "./auto-suggest-location.utils";
@@ -153,6 +154,9 @@ const handleCreateEvent = async (event, inputs, mainElement) => {
 
   if(!isValid) return;
 
+  const spinner = Spinner();
+  mainElement.appendChild(spinner);
+
  const formData =  createPayloadCreateEvent(inputs);
 
   const headers = {
@@ -170,6 +174,10 @@ const handleCreateEvent = async (event, inputs, mainElement) => {
     handleCreateEventResponse(status, data, inputs, mainElement);
   } catch (error) {
     console.log(error);
+  } finally {
+    if(spinner) {
+      spinner.remove();
+    }
   }
 };
 

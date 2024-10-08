@@ -1,4 +1,5 @@
 import { Banner } from "../components/Banner/Banner";
+import { Spinner } from "../components/Spinner/Spinner";
 import { handleNavbarWhenNavigate, navigateTo } from "../router/router";
 import { getAllEvents } from "./eventsList.utils";
 import { toggleMenu } from "./menu.utils";
@@ -15,6 +16,7 @@ export const makeRequest = async (
     body,
     headers,
   };
+
   try {
     const res = await fetch(url, options);
 
@@ -23,7 +25,7 @@ export const makeRequest = async (
     return { status: res.status, data };
   } catch (error) {
     console.log(error);
-  }
+  } 
 };
 
 export const login = async (email, password, mainElement) => {
