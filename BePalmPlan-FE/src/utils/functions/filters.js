@@ -48,7 +48,6 @@ export const filter = async () => {
   }
 
   const date = dateElement.textContent.toLocaleLowerCase().replace(" ", "-");
-  console.log(date);
 
   // Create params for BE
   const params = {};
@@ -68,4 +67,38 @@ export const filter = async () => {
     const container = document.querySelector(".events-list-container");
     displayEvents(data, container);
   }
+};
+
+export const resetFilters = () => {
+  // Filter elements
+  const queryElement = document.querySelector("#search");
+
+  const categoriesElement = document.querySelector(
+    "#categories-filter-dropdown-wrapper span"
+  );
+  const typeElement = document.querySelector(
+    "#type-filter-dropdown-wrapper span"
+  );
+  const dateElement = document.querySelector("#time-dropdown-wrapper span");
+
+  const locationElement = document.querySelector("#locations-filter");
+
+  // Reset elements
+  queryElement.value = "";
+  categoriesElement.textContent = "Any Categories";
+  typeElement.textContent = "Any Type";
+  dateElement.textContent = "Any Time";
+  locationElement.value = "";
+
+  // Style button to be disabled
+  const filterButton = document.querySelector("#reset");
+  filterButton.disabled = true;
+  filterButton.classList.add("disabled");
+
+  // get all events
+  filter();
+};
+
+export const handleSorting = () => {
+  // Implement later when I have attendees for the events
 };

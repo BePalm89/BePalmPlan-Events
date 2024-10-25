@@ -10,7 +10,11 @@ import { Input } from "../Input/Input";
 import { Select } from "../Select/Select";
 import { Button } from "../Button/Button";
 
-import { filter } from "../../utils/functions/filters";
+import {
+  filter,
+  resetFilters,
+  handleSorting,
+} from "../../utils/functions/filters";
 
 export const FiltersSection = () => {
   const div = document.createElement("div");
@@ -58,6 +62,7 @@ export const FiltersSection = () => {
     hasIcon: true,
     required: false,
     autosuggestAction: filter,
+    placeholder: "Search for location",
   });
 
   filterContainer.append(searchTextInput, categories, type, time, location);
@@ -70,18 +75,63 @@ export const FiltersSection = () => {
     id: "sorting",
     options: SORTING,
     className: "form-dropdown-wrapper dark",
+    selectAction: handleSorting,
   });
+
+  const checkFilters = () => {
+    const queryElement = document.querySelector("#search");
+
+    const categoriesElement = document.querySelector(
+      "#categories-filter-dropdown-wrapper span"
+    );
+    const typeElement = document.querySelector(
+      "#type-filter-dropdown-wrapper span"
+    );
+    const dateElement = document.querySelector("#time-dropdown-wrapper span");
+
+    const locationElement = document.querySelector("#locations-filter");
+
+    return !!(
+      queryElement?.value ||
+      !categoriesElement?.textContent.toLocaleLowerCase().includes("any") ||
+      !typeElement?.textContent.toLocaleLowerCase().includes("any") ||
+      !dateElement?.textContent.toLocaleLowerCase().includes("any") ||
+      locationElement?.value
+    );
+  };
 
   const resetFilterButton = Button({
     label: "reset filters",
     className: "filled",
     id: "reset",
+    fnc: resetFilters,
+    disabled: true,
   });
 
   actionDiv.append(sorting, resetFilterButton);
 
   div.append(filterContainer);
   div.append(actionDiv);
+
+  const updateButtonState = () => {
+    resetFilterButton.disabled = !checkFilters();
+    checkFilters()
+      ? resetFilterButton.classList.remove("disabled")
+      : resetFilterButton.classList.add("disabled");
+  };
+
+  searchTextInput.addEventListener("input", updateButtonState);
+  categories.addEventListener("click", updateButtonState);
+  type.addEventListener("click", updateButtonState);
+  time.addEventListener("click", updateButtonState);
+  location.addEventListener("input", updateButtonState);
+
+  setTimeout(() => {
+    const sortingDropdown = document.querySelector(
+      "#sorting-dropdown-wrapper span"
+    );
+    sortingDropdown.textContent = SORTING[0].label;
+  }, 500);
 
   return div;
 };

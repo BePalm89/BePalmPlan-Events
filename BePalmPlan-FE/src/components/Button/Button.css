@@ -13,7 +13,7 @@
   color: var(--black-color);
 }
 
-.ghost:hover {
+.ghost:not(.disabled):hover {
   color: var(--tertiary-color);
 }
 
@@ -22,6 +22,10 @@
   background-color: var(--tertiary-color);
 }
 
-.filled:hover {
+.filled:not(.disabled):hover {
   background-color: var(--secondary-color);
+}
+
+.disabled {
+  opacity: 0.6;
 }

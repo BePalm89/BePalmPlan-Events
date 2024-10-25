@@ -1,4 +1,6 @@
+import { EventDetails } from "../../pages/EventDetails/EventDetails";
 import { formatDate } from "../../utils/functions/formatDate";
+import { navigate } from "../../utils/functions/navigate";
 import { Link } from "../Link/Link";
 import "./EventCard.css";
 
@@ -59,6 +61,8 @@ export const EventCard = (event) => {
     Link({
       label: "See the events",
       className: "secondary",
+      fcn: (e) =>
+        navigate(e, { path: `/events/${event._id}`, page: EventDetails }),
     })
   );
 

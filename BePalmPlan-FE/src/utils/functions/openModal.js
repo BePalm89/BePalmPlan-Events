@@ -2,6 +2,7 @@ import { CreateEvent } from "../../pages/CreateEvent/CreateEvent";
 import { LoginOrRegister } from "../../pages/LoginOrRegister/LoginOrRegister";
 
 export const openModal = (btn) => {
+  console.log(btn);
   const mainElement = document.querySelector("main");
 
   const modal = document.createElement("div");

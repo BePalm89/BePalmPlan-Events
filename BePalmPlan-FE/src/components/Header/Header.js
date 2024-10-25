@@ -37,7 +37,7 @@ export const Header = () => {
 
     ctaContainer.append(
       Button({
-        label: "Login",
+        label: "login",
         className: "ghost",
         id: "login",
         fnc: () => openModal("login"),

@@ -6,4 +6,5 @@ export const API_ENDPOINT = Object.freeze({
   LOCATION_SEARCH: "/locations/search",
   CREATE_EVENT: "/events/create",
   SEARCH_EVENT: "/events/search",
+  GET_EVENT_BY_ID: "/events",
 });
