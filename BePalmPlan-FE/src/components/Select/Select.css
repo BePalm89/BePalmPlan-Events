@@ -1,0 +1,106 @@
+.select-container {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xs);
+}
+
+.dropdown-label {
+  color: var(--gray-dark-color);
+  text-transform: capitalize;
+}
+
+.dropdown-wrapper {
+  position: relative;
+  padding: var(--padding-xs) var(--padding-s);
+  cursor: pointer;
+  outline: none;
+}
+
+.filter-dropdown-wrapper {
+  background-color: var(--gray-light-color);
+  border-radius: var(--border-radius-xl);
+}
+
+.form-dropdown-wrapper {
+  position: relative;
+  padding: var(--padding-xs) var(--padding-s);
+  border-radius: var(--border-radius-s);
+  border: 1px solid var(--gray-light-color);
+  cursor: pointer;
+  outline: none;
+  color: var(--black-color);
+}
+
+.form-dropdown-wrapper.error {
+  border: 1px solid var(--error-color);
+}
+
+.dropdown-wrapper span {
+  margin-right: 20px;
+  font-size: var(--font-size-s);
+  text-transform: capitalize;
+  color: var(--gray-dark-color);
+}
+
+.dropdown-wrapper:after {
+  content: "";
+  width: 0;
+  height: 0;
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  margin-top: -3px;
+  border-width: 6px 6px 0 6px;
+  border-style: solid;
+  border-color: var(--black-color) transparent;
+}
+
+.dropdown-wrapper.is-active:after {
+  transform: rotate(180deg);
+}
+
+.dropdown-wrapper.is-active .dropdown-list {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  max-height: fit-content;
+}
+
+.dropdown-wrapper.is-active .dropdown-list li {
+  padding: var(--padding-xs) var(--padding-s);
+  text-transform: capitalize;
+  color: var(--gray-dark-color);
+}
+.dropdown-wrapper.is-active .dropdown-list li:hover {
+  background-color: var(--secondary-color);
+}
+
+.dropdown-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: var(--white-color);
+  border-radius: 0 0 5px 5px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-top: none;
+  border-bottom: none;
+  list-style: none;
+  transition: all 0.3s ease-out;
+  max-height: 0;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.dark {
+  border: 1px solid var(--gray-dark-color);
+  height: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (max-width: 690px) {
+  .select-container {
+    flex: 1;
+  }
+}

@@ -1,0 +1,18 @@
+.logo-container {
+  display: flex;
+  gap: var(--gap-s);
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-text {
+  font-family: var(--font-family-logo);
+  font-size: var(--font-size-l);
+  color: var(--tertiary-color);
+}
+
+@media (max-width: 800px) {
+  .logo-text {
+    display: none;
+  }
+}

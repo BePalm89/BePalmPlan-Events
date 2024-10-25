@@ -1,0 +1,26 @@
+.btn-link {
+  cursor: pointer;
+  text-transform: capitalize;
+}
+
+.btn-link.primary {
+  color: var(--primary-color);
+  padding: 0 var(--spacing-xs);
+}
+
+.btn-link.primary:hover {
+  text-decoration: underline;
+}
+
+.btn-link.secondary {
+  color: var(--black-color);
+  font-weight: var(--font-weight-bold);
+  border-bottom: 1px solid var(--black-color);
+  transition: all 0.3s ease;
+  display: inline-block;
+  width: fit-content;
+}
+
+.btn-link.secondary:hover {
+  transform: scale(1.05);
+}

@@ -1,0 +1,13 @@
+header {
+  background-color: var(--white-two-color);
+  padding: var(--padding-s) var(--padding-m);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 4px rgba(34, 36, 50, 0.25);
+}
+
+.buttons-container {
+  display: flex;
+  gap: var(--gap-m);
+}

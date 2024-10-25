@@ -1,0 +1,25 @@
+.action-header {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--gap-m);
+  flex-wrap: wrap;
+}
+
+.filter-wrapper {
+  display: flex;
+  gap: var(--gap-m);
+  flex-wrap: wrap;
+}
+
+.filter-container {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--gap-m);
+  flex-wrap: wrap;
+}
+
+.actions {
+  display: flex;
+  align-items: baseline;
+  gap: var(--gap-m);
+}

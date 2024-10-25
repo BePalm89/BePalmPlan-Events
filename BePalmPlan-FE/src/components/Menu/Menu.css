@@ -1,0 +1,34 @@
+#menu {
+  display: none;
+}
+
+#menu.show {
+  display: block;
+  position: absolute;
+  top: 66px;
+  right: var(--spacing-m);
+  background-color: var(--white-color);
+  padding: var(--padding-xs) var(--padding-s);
+  border: 1px solid var(--black-color);
+  border-radius: var(--border-radius-s);
+  text-transform: capitalize;
+}
+
+#menu ul {
+  display: flex;
+  flex-direction: column;
+}
+
+#menu ul li {
+  padding: var(--padding-xs);
+  cursor: pointer;
+}
+
+#menu ul li:not(:last-of-type) {
+  border-bottom: 1px solid var(--black-color);
+}
+
+#menu ul li:hover {
+  background-color: var(--primary-color);
+  color: var(--white-color);
+}

@@ -1,0 +1,99 @@
+.autosuggest-container {
+  position: relative;
+}
+
+.suggestions-locations-container,
+.suggestions-locations-filter-container {
+  display: none;
+}
+
+.suggestions-locations-container.show,
+.suggestions-locations-filter-container.show {
+  display: block;
+  position: absolute;
+  top: 69px;
+  left: 0;
+  background-color: var(--white-color);
+  padding: var(--padding-s) var(--padding-xs);
+  border: 1px solid var(--gray-dark-color);
+  border-radius: var(--border-radius-xs);
+  max-height: 200px;
+  overflow-y: scroll;
+  width: 100%;
+  z-index: 3;
+}
+
+.suggestions-locations-container .suggestions-locations-list,
+.suggestions-locations-filter-container .suggestions-locations-filter-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xs);
+  align-items: flex-start;
+}
+
+.suggestions-locations-container .suggestions-locations-list .suggestions-item,
+.suggestions-locations-filter-container
+  .suggestions-locations-filter-list
+  .suggestions-item {
+  font-size: var(--font-size-xs);
+  padding: var(--padding-xs) var(--padding-s);
+  cursor: pointer;
+  width: 100%;
+  text-align: start;
+}
+
+.suggestions-locations-container
+  .suggestions-locations-list
+  .suggestions-item:hover,
+.suggestions-locations-filter-container
+  .suggestions-locations-filter-list
+  .suggestions-item:hover {
+  background-color: var(--primary-color);
+  border-bottom: 1px solid var(--black-color) !important;
+}
+
+.suggestions-locations-container
+  .suggestions-locations-list
+  .suggestions-item:not(:last-of-type),
+.suggestions-locations-filter-container
+  .suggestions-locations-filter-list
+  .suggestions-item:not(:last-of-type) {
+  border-bottom: 1px solid var(--gray-light-color);
+}
+
+.suggestions-locations-container::-webkit-scrollbar,
+.suggestions-locations-filter-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.suggestions-locations-container::-webkit-scrollbar-track,
+.suggestions-locations-filter-container::-webkit-scrollbar-track {
+  background: var(--white-color);
+  border-radius: var(--border-radius-xs);
+}
+
+.suggestions-locations-container::-webkit-scrollbar-thumb
+  .suggestions-locations-filter-container::-webkit-scrollbar-thumb {
+  background: var(--tertiary-color);
+  border-radius: var(--border-radius-xs);
+}
+
+.highlight {
+  font-weight: bold;
+}
+
+.no-results {
+  color: var(--gray-dark-color);
+  font-size: var(--font-size-xs);
+}
+
+.filter-locations {
+  width: 100%;
+  height: 36px;
+  border-radius: var(--border-radius-xs);
+  border: 1px solid var(--gray-dark-color);
+  outline: none;
+  padding: var(--padding-xs);
+  color: var(--black-color);
+  font-family: inherit;
+}

@@ -1,6 +1,11 @@
 import { deleteFile } from "../../utils/deleteFile.js";
 import Event from "../models/Event.model.js";
+import dayjs from "dayjs";
+import isBetween from "dayjs/plugin/isBetween.js";
+import isoWeek from "dayjs/plugin/isoWeek.js";
 
+dayjs.extend(isoWeek);
+dayjs.extend(isBetween);
 export const getAllEvents = async (req, res, next) => {
   const today = new Date();
 
@@ -31,6 +36,10 @@ export const createNewEvent = async (req, res, next) => {
     const loggedUserId = req.user._id;
 
     const { createBy } = req.body;
+
+    if (!createBy) {
+      return res.status(400).json("Bad Request: The request is malformed.");
+    }
 
     if (loggedUserId.toString() !== createBy) {
       return res
@@ -65,7 +74,7 @@ export const searchEvents = async (req, res, next) => {
   ];
 
   try {
-    const { query, location, category } = req.query;
+    const { query, location, category, date } = req.query;
 
     let searchCriteria = {};
 
@@ -73,7 +82,9 @@ export const searchEvents = async (req, res, next) => {
       searchCriteria.title = { $regex: query, $options: "i" };
     }
 
-    if (location) {
+    if (location === "in-person") {
+      searchCriteria.location = { $ne: "online" };
+    } else if (location) {
       searchCriteria.location = { $regex: location, $options: "i" };
     }
 
@@ -83,9 +94,58 @@ export const searchEvents = async (req, res, next) => {
       } else {
         return res.status(400).json("Invalid category filter");
       }
+    } else {
+      searchCriteria.category = { $in: allowedCategories };
     }
 
-    const filteredEvents = await Event.find(searchCriteria);
+    const today = dayjs();
+    const tomorrow = today.add(1, "day");
+    const endOfThisWeek = today.endOf("isoWeek");
+    const startOfNextWeek = endOfThisWeek.add(1, "day");
+    const endOfNextWeek = startOfNextWeek.endOf("isoWeek");
+    const endOfNextMonth = today.add(1, "month").endOf("month");
+
+    if (date) {
+      switch (date) {
+        case "today":
+          searchCriteria.date = {
+            $gte: today.startOf("day").toDate(),
+            $lte: today.endOf("day").toDate(),
+          };
+          break;
+        case "tomorrow":
+          searchCriteria.date = {
+            $gte: tomorrow.startOf("day").toDate(),
+            $lte: tomorrow.endOf("day").toDate(),
+          };
+          break;
+        case "this-week":
+          searchCriteria.date = {
+            $gte: today.startOf("day").toDate(),
+            $lte: endOfThisWeek.toDate(),
+          };
+          break;
+        case "next-week":
+          searchCriteria.date = {
+            $gte: startOfNextWeek.toDate(),
+            $lte: endOfNextWeek.toDate(),
+          };
+          break;
+        case "next-month":
+          searchCriteria.date = {
+            $gte: today.startOf("day").toDate(),
+            $lte: endOfNextMonth.toDate(),
+          };
+          break;
+        default:
+          searchCriteria.date = { $gte: today.startOf("day").toDate() };
+          break;
+      }
+    }
+
+    const filteredEvents = await Event.find(searchCriteria).sort({
+      date: 1,
+    });
 
     return res.status(200).json(filteredEvents);
   } catch (error) {

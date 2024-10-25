@@ -1,0 +1,27 @@
+.btn {
+  border: none;
+  padding: var(--padding-xs);
+  font-family: var(--font-family-heading);
+  text-transform: capitalize;
+  border-radius: var(--border-radius-xs);
+  cursor: pointer;
+  font-size: var(--font-size-s);
+}
+
+.ghost {
+  background-color: transparent;
+  color: var(--black-color);
+}
+
+.ghost:hover {
+  color: var(--tertiary-color);
+}
+
+.filled {
+  color: var(--white-color);
+  background-color: var(--tertiary-color);
+}
+
+.filled:hover {
+  background-color: var(--secondary-color);
+}

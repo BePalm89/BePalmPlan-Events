@@ -102,9 +102,7 @@ export const addFavoriteEvents = async (req, res, next) => {
       ...newUser.favoriteEvents,
     ];
 
-    newUser.attendEvents = [
-      ...currentUser.attendEvents,
-    ]
+    newUser.attendEvents = [...currentUser.attendEvents];
 
     const updatedUser = await User.findByIdAndUpdate(id, newUser, {
       new: true,
@@ -180,18 +178,20 @@ export const addAttendEvents = async (req, res, next) => {
 
     const eventToAttend = await Event.findById(attendEvents[0]);
 
-    if(!eventToAttend) {
+    if (!eventToAttend) {
       return res.status(404).json("Event not found");
     }
 
     const modifiedEvent = new Event({
-      attendees: [...eventToAttend.attendees, id]
+      attendees: [...eventToAttend.attendees, id],
     });
 
     modifiedEvent._id = attendEvents[0];
 
-    await Event.findByIdAndUpdate(attendEvents[0], modifiedEvent, { new: true});
- 
+    await Event.findByIdAndUpdate(attendEvents[0], modifiedEvent, {
+      new: true,
+    });
+
     if (!currentUser) {
       return res.status(404).json("User not found");
     }
@@ -212,9 +212,7 @@ export const addAttendEvents = async (req, res, next) => {
       ...newUser.attendEvents,
     ];
 
-    newUser.favoriteEvents = [
-      ...currentUser.favoriteEvents,
-    ]
+    newUser.favoriteEvents = [...currentUser.favoriteEvents];
 
     const updatedUser = await User.findByIdAndUpdate(id, newUser, {
       new: true,
@@ -244,9 +242,11 @@ export const removeAttendEvents = async (req, res, next) => {
 
     const eventToAttend = await Event.findById(attendEvents[0]);
 
-    const userIndex = eventToAttend.attendees.findIndex(userId => userId.toString() === id);
+    const userIndex = eventToAttend.attendees.findIndex(
+      (userId) => userId.toString() === id
+    );
 
-    if(userIndex === -1) {
+    if (userIndex === -1) {
       return res.status(400).json("User is not in the list");
     }
 
@@ -254,7 +254,9 @@ export const removeAttendEvents = async (req, res, next) => {
 
     eventToAttend._id = attendEvents[0];
 
-    await Event.findByIdAndUpdate(attendEvents[0], eventToAttend, { new: true});
+    await Event.findByIdAndUpdate(attendEvents[0], eventToAttend, {
+      new: true,
+    });
 
     if (!currentUser) {
       return res.status(404).json("User not found");
@@ -286,7 +288,7 @@ export const removeAttendEvents = async (req, res, next) => {
   }
 };
 
-export const logout =  async (req, res, next) => {
+export const logout = async (req, res, next) => {
   try {
     const token = req.headers.authorization;
 
@@ -294,8 +296,8 @@ export const logout =  async (req, res, next) => {
 
     blacklistToken(parsedToken);
 
-    return res.status(200).json({message: "User logged out successfully"});
+    return res.status(200).json({ message: "User logged out successfully" });
   } catch (error) {
     return next(error);
   }
-}
+};
