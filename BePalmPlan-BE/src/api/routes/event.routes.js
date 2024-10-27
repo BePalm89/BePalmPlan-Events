@@ -13,6 +13,7 @@ import {
 } from "../controllers/event.controllers.js";
 import { isAuth } from "../../middleware/auth.js";
 import { upload } from "../../middleware/file.js";
+import { checkEventCreator } from "../../middleware/eventPermission.js";
 
 const router = express.Router();
 
@@ -34,8 +35,12 @@ router.get("/", isAuth, getAllEvents);
 router.get("/search", isAuth, searchEvents);
 router.get("/:id", isAuth, getEventById);
 router.post("/create", [isAuth, upload.single("imgEvent")], createNewEvent);
-router.put("/:id", [isAuth, upload.single("imgEvent")], updateEvent);
-router.delete("/:id", isAuth, deleteEvent);
+router.put(
+  "/:id",
+  [isAuth, upload.single("imgEvent"), checkEventCreator],
+  updateEvent
+);
+router.delete("/:id", [isAuth, checkEventCreator], deleteEvent);
 router.get("/attending/:userId", isAuth, getAllAttendingEventsByUser);
 router.get("/hosting/:userId", isAuth, getAllHostingEventsByUser);
 router.post("/add-attendees/:id", isAuth, addAttendee);
