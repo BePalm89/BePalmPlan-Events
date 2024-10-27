@@ -264,3 +264,29 @@ export const getAllHostingEventsByUser = async (req, res, next) => {
     return next(error);
   }
 };
+
+export const addAttendee = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    const userId = req.user._id;
+
+    const event = await Event.findById(id);
+
+    if (!event) {
+      return res.status(404).json("Event not found");
+    }
+
+    if (event.attendees.includes(userId)) {
+      return res.status(400).json("User is already attending this event");
+    }
+
+    event.attendees.push(userId);
+
+    await event.save();
+
+    return res.status(200).json(event);
+  } catch (error) {
+    return next(error);
+  }
+};

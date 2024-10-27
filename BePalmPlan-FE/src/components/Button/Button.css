@@ -26,6 +26,17 @@
   background-color: var(--secondary-color);
 }
 
+.outline {
+  border: 1px solid var(--tertiary-color);
+  color: var(--tertiary-color);
+  background-color: var(--white-color);
+}
+
+.outline:not(.disabled):hover {
+  color: var(--white-color);
+  background-color: var(--tertiary-color);
+}
+
 .disabled {
   opacity: 0.6;
 }

@@ -37,10 +37,21 @@ export const EventDetails = async () => {
   div.append(
     PageHeader({
       titleLabel: data.title,
-      isButtonVisible: visibilityButton,
-      btnLabel: "attend event",
-      btnFnc: (e) => attendEvent(e, data),
-      btnId: "attend",
+      buttons: [
+        {
+          isButtonVisible: visibilityButton,
+          btnLabel: "attend event",
+          btnFnc: (e) => attendEvent(e, data),
+          btnId: "attend",
+        },
+        {
+          isButtonVisible: isAlreadyAttendingEvent,
+          btnLabel: "not going",
+          btnFnc: (e) => attendEvent(e, data),
+          btnId: "attend",
+          btnStyle: "outline",
+        },
+      ],
     })
   );
 

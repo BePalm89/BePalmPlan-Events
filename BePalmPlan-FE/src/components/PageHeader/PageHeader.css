@@ -16,3 +16,8 @@
   flex-direction: column;
   gap: var(--gap-s);
 }
+
+.btn-container {
+  display: flex;
+  gap: var(--gap-m);
+}

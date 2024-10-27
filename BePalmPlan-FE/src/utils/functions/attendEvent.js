@@ -10,10 +10,10 @@ export const attendEvent = async (e, event) => {
   const token = localStorage.getItem("token");
 
   const { data, status } = await makeRequest({
-    endpoint: `${API_ENDPOINT.UPDATE_EVENT}/${event._id}`,
-    method: "PUT",
+    endpoint: `${API_ENDPOINT.ADD_ATTENDEES_TO_EVENT}/${event._id}`,
+    method: "POST",
     body: {
-      attendees: [user._id],
+      attendees: user._id,
     },
     token,
   });

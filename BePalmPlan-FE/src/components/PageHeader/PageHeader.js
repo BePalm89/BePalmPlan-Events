@@ -7,13 +7,7 @@ import { navigate } from "../../utils/functions/navigate";
 
 import { Events } from "../../pages/Events/Events";
 
-export const PageHeader = ({
-  titleLabel,
-  isButtonVisible,
-  btnLabel,
-  btnFnc,
-  btnId,
-}) => {
+export const PageHeader = ({ titleLabel, buttons = [] }) => {
   const headerContainer = document.createElement("div");
   headerContainer.classList.add("header-container");
 
@@ -41,16 +35,24 @@ export const PageHeader = ({
 
   ctaTitleContainer.append(title);
 
-  if (isButtonVisible) {
-    headerContainer.append(
-      Button({
-        label: btnLabel,
-        className: "filled",
-        id: btnId,
-        fnc: btnFnc,
-      })
-    );
-  }
+  const btnContainer = document.createElement("div");
+  btnContainer.classList.add("btn-container");
+  headerContainer.append(btnContainer);
+
+  buttons.forEach(
+    ({ isButtonVisible, btnLabel, btnFnc, btnId, btnStyle = "filled" }) => {
+      if (isButtonVisible) {
+        btnContainer.append(
+          Button({
+            label: btnLabel,
+            className: btnStyle,
+            id: btnId,
+            fnc: btnFnc,
+          })
+        );
+      }
+    }
+  );
 
   return headerContainer;
 };

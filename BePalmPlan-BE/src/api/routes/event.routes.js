@@ -8,6 +8,7 @@ import {
   deleteEvent,
   getAllAttendingEventsByUser,
   getAllHostingEventsByUser,
+  addAttendee,
 } from "../controllers/event.controllers.js";
 import { isAuth } from "../../middleware/auth.js";
 import { upload } from "../../middleware/file.js";
@@ -24,6 +25,7 @@ const router = express.Router();
  6. search event by query params with auth
  7. get attending events by user id
  8. get hosting events by user id
+ 9. Add a new attendee in a particular event
 */
 
 router.get("/", isAuth, getAllEvents);
@@ -34,5 +36,6 @@ router.put("/:id", [isAuth, upload.single("imgEvent")], updateEvent);
 router.delete("/:id", isAuth, deleteEvent);
 router.get("/attending/:userId", isAuth, getAllAttendingEventsByUser);
 router.get("/hosting/:userId", isAuth, getAllHostingEventsByUser);
+router.post("/add-attendees/:id", isAuth, addAttendee);
 
 export default router;
