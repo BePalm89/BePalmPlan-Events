@@ -1,7 +1,7 @@
 import { Menu } from "../Menu/Menu";
 import "./Avatar.css";
 
-export const Avatar = (user) => {
+export const Avatar = (user, hasMenu = false) => {
   const { username, profileImg } = user;
 
   const avatarContainer = document.createElement("div");
@@ -12,21 +12,23 @@ export const Avatar = (user) => {
   }
   `;
 
-  const menuBtn = document.createElement("div");
-  menuBtn.classList.add("down-icon-container");
+  if (hasMenu) {
+    const menuBtn = document.createElement("div");
+    menuBtn.classList.add("down-icon-container");
 
-  const downIcon = document.createElement("img");
-  downIcon.src = "/icons/down.png";
-  downIcon.alt = "down-icon";
-  downIcon.id = "down-btn";
+    const downIcon = document.createElement("img");
+    downIcon.src = "/icons/down.png";
+    downIcon.alt = "down-icon";
+    downIcon.id = "down-btn";
 
-  menuBtn.append(downIcon);
-  avatarContainer.append(menuBtn);
+    menuBtn.append(downIcon);
+    avatarContainer.append(menuBtn);
 
-  downIcon.addEventListener("click", () => {
-    const menu = document.querySelector("#menu");
-    menu.classList.toggle("show");
-  });
+    downIcon.addEventListener("click", () => {
+      const menu = document.querySelector("#menu");
+      menu.classList.toggle("show");
+    });
+  }
 
   return avatarContainer;
 };

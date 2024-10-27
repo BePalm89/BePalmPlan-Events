@@ -45,3 +45,8 @@
   background: var(--tertiary-color);
   border-radius: var(--border-radius-xs);
 }
+
+.cta-paragraph {
+  display: flex;
+  justify-content: center;
+}

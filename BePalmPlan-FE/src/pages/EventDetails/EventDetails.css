@@ -5,13 +5,6 @@
   gap: var(--gap-m);
 }
 
-.header-container {
-  padding-bottom: var(--padding-s);
-  border-bottom: 1px solid var(--black-color);
-  display: flex;
-  justify-content: space-between;
-}
-
 .img-container {
   height: 60vh;
   border-radius: var(--border-radius-s);
@@ -26,6 +19,7 @@
 .info-container {
   display: flex;
   justify-content: space-between;
+  gap: var(--gap-m);
 }
 
 .time-container,
@@ -34,4 +28,5 @@
   display: flex;
   gap: var(--gap-s);
   align-items: center;
+  text-transform: capitalize;
 }

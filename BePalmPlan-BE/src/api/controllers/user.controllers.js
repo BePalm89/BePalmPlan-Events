@@ -1,5 +1,4 @@
 import User from "../models/User.model.js";
-import Event from "../models/Event.model.js";
 import bcrypt from "bcrypt";
 import { generateToken } from "../../utils/jtw.js";
 import { blacklistToken } from "../../utils/blacklistToken.js";
@@ -55,10 +54,7 @@ export const getUserById = async (req, res, next) => {
   try {
     const { id } = req.params;
 
-    const user = await User.findById(id).populate([
-      "favoriteEvents",
-      "attendEvents",
-    ]);
+    const user = await User.findById(id).populate(["favoriteEvents"]);
 
     return res.status(200).json(user);
   } catch (error) {
@@ -101,8 +97,6 @@ export const addFavoriteEvents = async (req, res, next) => {
       ...currentUser.favoriteEvents,
       ...newUser.favoriteEvents,
     ];
-
-    newUser.attendEvents = [...currentUser.attendEvents];
 
     const updatedUser = await User.findByIdAndUpdate(id, newUser, {
       new: true,
@@ -148,7 +142,6 @@ export const removeFavoriteEvents = async (req, res, next) => {
 
     newUser._id = id;
     newUser.favoriteEvents = [...currentUser.favoriteEvents];
-    newUser.attendEvents = [...currentUser.attendEvents];
 
     const updatedUser = await User.findByIdAndUpdate(id, newUser, {
       new: true,
@@ -160,7 +153,7 @@ export const removeFavoriteEvents = async (req, res, next) => {
   }
 };
 
-export const addAttendEvents = async (req, res, next) => {
+/* export const addAttendEvents = async (req, res, next) => {
   try {
     const { id } = req.params;
 
@@ -286,7 +279,7 @@ export const removeAttendEvents = async (req, res, next) => {
   } catch (error) {
     return next(error);
   }
-};
+}; */
 
 export const logout = async (req, res, next) => {
   try {

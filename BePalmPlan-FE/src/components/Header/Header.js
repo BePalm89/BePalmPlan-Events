@@ -26,7 +26,7 @@ export const Header = () => {
   header.append(Logo({ justLogo: false }));
 
   if (token) {
-    header.append(Avatar(user));
+    header.append(Avatar(user, true));
     header.append(Menu());
   } else {
     const ctaContainer = document.createElement("div");

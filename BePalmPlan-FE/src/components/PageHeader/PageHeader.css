@@ -1,0 +1,18 @@
+.header-container {
+  padding-bottom: var(--padding-s);
+  border-bottom: 1px solid var(--black-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.cta {
+  display: flex;
+  align-items: center;
+}
+
+.cta-title {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-s);
+}

@@ -1,0 +1,11 @@
+.status-item {
+  text-transform: uppercase;
+  color: var(--black-color);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-m);
+  cursor: pointer;
+}
+
+.status-item.active {
+  color: var(--primary-color);
+}

@@ -6,7 +6,9 @@ import { makeRequest } from "../../utils/api/makeRequest";
 import { createPage } from "../../utils/functions/createPage";
 import { longFormatDate } from "../../utils/functions/formatDate";
 
-import { Button } from "../../components/Button/Button";
+import { AttendeesSection } from "../../components/AttendeesSection/AttendessSection";
+import { PageHeader } from "../../components/PageHeader/PageHeader";
+import { attendEvent } from "../../utils/functions/attendEvent";
 
 export const EventDetails = async () => {
   const div = createPage("event-details");
@@ -22,29 +24,25 @@ export const EventDetails = async () => {
     token,
   });
 
-  // Title
-
-  const headerContainer = document.createElement("div");
-  headerContainer.classList.add("header-container");
-  div.append(headerContainer);
-
-  const title = document.createElement("h1");
-  title.textContent = data.title;
-
-  headerContainer.append(title);
-
-  // Attend button
   const userFromLocalStorage = localStorage.getItem("user");
   const user = JSON.parse(userFromLocalStorage);
 
-  const attendButton = Button({
-    label: "attend event",
-    className: "filled",
-  });
+  const isAlreadyAttendingEvent = data.attendees.find(
+    (attendee) => attendee._id === user._id
+  );
 
-  if (user._id !== data.createBy._id) {
-    headerContainer.append(attendButton);
-  }
+  const visibilityButton =
+    user._id !== data.createBy._id && !isAlreadyAttendingEvent;
+
+  div.append(
+    PageHeader({
+      titleLabel: data.title,
+      isButtonVisible: visibilityButton,
+      btnLabel: "attend event",
+      btnFnc: (e) => attendEvent(e, data),
+      btnId: "attend",
+    })
+  );
 
   // Img
   const imgContainer = document.createElement("div");
@@ -111,4 +109,7 @@ export const EventDetails = async () => {
   descriptionContainer.append(descriptionInfo);
 
   div.append(descriptionContainer);
+
+  // Attendees
+  div.append(AttendeesSection(data.attendees, data.createBy));
 };

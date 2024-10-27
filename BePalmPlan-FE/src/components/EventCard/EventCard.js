@@ -1,10 +1,14 @@
 import { EventDetails } from "../../pages/EventDetails/EventDetails";
 import { formatDate } from "../../utils/functions/formatDate";
+import { handleFavorite } from "../../utils/functions/handleFavoriteEvents";
 import { navigate } from "../../utils/functions/navigate";
 import { Link } from "../Link/Link";
 import "./EventCard.css";
 
 export const EventCard = (event) => {
+  const user = JSON.parse(localStorage.getItem("user"));
+  const isFavorite = user?.favoriteEvents?.includes(event._id);
+
   const isOnline = event.location.toLowerCase() === "online";
 
   const div = document.createElement("div");
@@ -22,6 +26,26 @@ export const EventCard = (event) => {
     onlineDiv.classList.add("online");
     onlineDiv.textContent = event.location.toUpperCase();
     div.append(onlineDiv);
+  }
+
+  if (event.createBy !== user._id) {
+    const favoriteContainer = document.createElement("div");
+    favoriteContainer.classList.add("favorite-container");
+
+    div.append(favoriteContainer);
+
+    const iconFavorite = document.createElement("img");
+    iconFavorite.classList.add("like-icon");
+    iconFavorite.src = isFavorite
+      ? "/icons/like-filled.png"
+      : "/icons/like.png";
+    iconFavorite.alt = "like-icon";
+
+    favoriteContainer.append(iconFavorite);
+
+    favoriteContainer.addEventListener("click", (e) =>
+      handleFavorite(e, event._id, iconFavorite)
+    );
   }
 
   const bodyDiv = document.createElement("div");

@@ -1,10 +1,16 @@
 export const API_ENDPOINT = Object.freeze({
+  LOCATION_SEARCH: "/locations/search",
   LOGIN_USER: "/users/login",
   LOGOUT_USER: "/users/logout",
   REGISTER_USER: "/users/register",
+  ADD_FAVORITE_EVENT: "/users/add-favorite-event",
+  REMOVE_FAVORITE_EVENT: "/users/remove-favorite-event",
+  GET_USER_BY_ID: "/users/",
   GET_ALL_EVENTS: "/events",
-  LOCATION_SEARCH: "/locations/search",
+  GET_EVENT_BY_ID: "/events",
+  UPDATE_EVENT: "/events",
   CREATE_EVENT: "/events/create",
   SEARCH_EVENT: "/events/search",
-  GET_EVENT_BY_ID: "/events",
+  GET_ATTENDING_EVENTS: "/events/attending",
+  GET_HOSTING_EVENTS: "/events/hosting",
 });

@@ -1,0 +1,8 @@
+.event-status-container nav {
+  padding: var(--padding-m) 0;
+}
+
+.event-status-container nav ul {
+  display: flex;
+  gap: var(--gap-l);
+}

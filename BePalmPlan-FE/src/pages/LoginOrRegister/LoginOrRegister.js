@@ -35,7 +35,7 @@ export const LoginOrRegister = (btn) => {
   // Description and action to go to register
 
   const text = document.createElement("p");
-  text.classList.add("m-b-s");
+  text.classList.add("m-b-s", "cta-paragraph");
 
   const staticText = document.createElement("span");
   staticText.textContent = fromLoginBtn
@@ -46,14 +46,17 @@ export const LoginOrRegister = (btn) => {
   const form = document.createElement("form");
   form.noValidate = true;
 
+  const linkSpan = document.createElement("span");
+
   const linkElement = Link({
-    label: fromLoginBtn ? "sign up" : "Login",
+    label: fromLoginBtn ? "sign up" : "login",
     className: "primary",
     fcn: () => switchLoginRegister(titleElement, staticText, linkElement, form),
   });
 
   text.append(staticText);
-  text.append(linkElement);
+  linkSpan.append(linkElement);
+  text.append(linkSpan);
 
   // Append
   div.append(text);

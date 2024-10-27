@@ -1,0 +1,38 @@
+.att-card-container {
+  background-color: var(--white-color);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 150px;
+  min-width: fit-content;
+  padding: var(--padding-m);
+  border-radius: var(--border-radius-s);
+  gap: var(--gap-m);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
+  margin-bottom: var(--margin-xs);
+}
+
+.att-card-container .profile-pic-container {
+  width: 100px;
+  height: 100px;
+}
+
+.att-card-container .profile-pic-container p {
+  font-size: var(--font-size-xxl);
+}
+
+.host {
+  background-color: var(--secondary-color);
+  padding: var(--padding-xs);
+  border-radius: var(--border-radius-xs);
+  text-transform: uppercase;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  color: var(--black-color);
+  position: absolute;
+  top: -16px;
+  left: 16px;
+  z-index: 3;
+}

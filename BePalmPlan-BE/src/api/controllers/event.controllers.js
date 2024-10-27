@@ -23,7 +23,11 @@ export const getEventById = async (req, res, next) => {
   try {
     const { id } = req.params;
 
-    const event = await Event.findById(id).populate("createBy");
+    const event = await Event.findById(id).populate(["createBy", "attendees"]);
+
+    if (!event) {
+      return res.status(404).json("Events not found");
+    }
 
     return res.status(200).json(event);
   } catch (error) {
@@ -157,29 +161,35 @@ export const updateEvent = async (req, res, next) => {
   try {
     const { id } = req.params;
 
-    const loggedUserId = req.user._id;
-
     const oldEvent = await Event.findById(id);
 
-    if (oldEvent.createBy.toString() !== loggedUserId.toString()) {
-      return res
-        .status(403)
-        .json(
-          "Unauthorized action: You cannot modify an event in behalf of someone else"
-        );
-    }
-
-    if (oldEvent.imgEvent && req.file) {
-      deleteFile(oldEvent.imgEvent);
+    if (!oldEvent) {
+      return res.status(404).json("Event not found!");
     }
 
     const modifiedEvent = new Event(req.body);
 
     modifiedEvent._id = id;
 
+    if (oldEvent.imgEvent && req.file) {
+      deleteFile(oldEvent.imgEvent);
+    }
+
     if (req.file) {
       modifiedEvent.imgEvent = req.file.path;
     }
+
+    const newAttendee = req.body.attendees[0];
+
+    if (oldEvent.attendees.includes(newAttendee)) {
+      return res
+        .status(400)
+        .json(`Attendee is already register for this event`);
+    }
+
+    const updatedAttendees = [...oldEvent.attendees, newAttendee];
+
+    modifiedEvent.attendees = updatedAttendees;
 
     const updatedEvent = await Event.findByIdAndUpdate(id, modifiedEvent, {
       new: true,
@@ -215,6 +225,41 @@ export const deleteEvent = async (req, res, next) => {
     deleteFile(deletedEvent.imgEvent);
 
     return res.status(200).json("Event deleted successfully");
+  } catch (error) {
+    return next(error);
+  }
+};
+
+export const getAllAttendingEventsByUser = async (req, res, next) => {
+  try {
+    const { userId } = req.params;
+    const today = new Date();
+
+    const events = await Event.find({ date: { $gte: today } });
+
+    const attendingEvents = events
+      .filter((event) => event.attendees.includes(userId))
+      .sort((a, b) => new Date(a.date) - new Date(b.date));
+
+    return res.status(200).json(attendingEvents);
+  } catch (error) {
+    return next(error);
+  }
+};
+
+export const getAllHostingEventsByUser = async (req, res, next) => {
+  try {
+    const { userId } = req.params;
+    const today = new Date();
+
+    const hostingEvents = await Event.find({
+      createBy: userId,
+      date: { $gte: today },
+    }).sort({
+      date: 1,
+    });
+
+    return res.status(200).json(hostingEvents);
   } catch (error) {
     return next(error);
   }

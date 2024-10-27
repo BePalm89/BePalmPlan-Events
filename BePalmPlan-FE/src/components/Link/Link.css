@@ -1,6 +1,7 @@
 .btn-link {
   cursor: pointer;
   text-transform: capitalize;
+  display: flex;
 }
 
 .btn-link.primary {
@@ -23,4 +24,10 @@
 
 .btn-link.secondary:hover {
   transform: scale(1.05);
+}
+
+.icon-link {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
 }

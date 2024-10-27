@@ -150,3 +150,20 @@
   color: var(--white-color);
   z-index: 1;
 }
+
+.favorite-container {
+  position: absolute;
+  top: 50px;
+  left: -10px;
+  z-index: 1;
+  background-color: var(--secondary-color);
+  padding: var(--padding-xs) var(--padding-s);
+  border-radius: var(--border-radius-xs);
+  color: var(--black-color);
+}
+
+.like-icon {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+}
