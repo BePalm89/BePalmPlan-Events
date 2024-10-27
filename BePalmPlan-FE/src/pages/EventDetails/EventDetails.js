@@ -9,7 +9,7 @@ import { longFormatDate } from "../../utils/functions/formatDate";
 import { AttendeesSection } from "../../components/AttendeesSection/AttendessSection";
 import { PageHeader } from "../../components/PageHeader/PageHeader";
 import { attendEvent } from "../../utils/functions/attendEvent";
-
+import { notGoingToEvent } from "../../utils/functions/notGoingToEvent";
 export const EventDetails = async () => {
   const div = createPage("event-details");
 
@@ -47,7 +47,7 @@ export const EventDetails = async () => {
         {
           isButtonVisible: isAlreadyAttendingEvent,
           btnLabel: "not going",
-          btnFnc: (e) => attendEvent(e, data),
+          btnFnc: (e) => notGoingToEvent(e, data),
           btnId: "attend",
           btnStyle: "outline",
         },

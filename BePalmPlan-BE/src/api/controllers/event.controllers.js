@@ -290,3 +290,30 @@ export const addAttendee = async (req, res, next) => {
     return next(error);
   }
 };
+
+export const removeAttendee = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    const userId = req.user._id;
+
+    const event = await Event.findById(id);
+
+    if (!event) {
+      return res.status(404).json("Event not found");
+    }
+
+    if (!event.attendees.includes(userId)) {
+      return res.status(400).json("User is not attending this event");
+    }
+
+    event.attendees = event.attendees.filter(
+      (attendee) => attendee.toString() !== userId.toString()
+    );
+
+    await event.save();
+    return res.status(200).json(event);
+  } catch (error) {
+    return next(error);
+  }
+};
