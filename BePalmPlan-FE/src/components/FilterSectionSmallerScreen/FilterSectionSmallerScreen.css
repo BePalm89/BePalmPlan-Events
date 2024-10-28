@@ -1,0 +1,67 @@
+.filter-container-small-screen {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  background-color: var(--white-color);
+  width: 100%;
+  z-index: 2;
+  padding: var(--padding-s) var(--padding-m);
+  border: 1px solid var(--tertiary-color);
+  border-top-left-radius: var(--border-radius-s);
+  border-top-right-radius: var(--border-radius-s);
+  text-align: center;
+  box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.filter-container-small-screen img {
+  width: 24px;
+  height: 24px;
+}
+
+.filter-panel {
+  position: fixed;
+  bottom: 63px;
+  left: 0;
+  width: 100%;
+  height: fit-content;
+  background-color: var(--white-color);
+  border-top-left-radius: var(--border-radius-s);
+  border-top-right-radius: var(--border-radius-s);
+  box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
+  padding: var(--padding-m) var(--padding-l);
+  transform: translateY(calc(100% + 61px));
+  transition: transform 0.3s ease-in-out;
+  z-index: 3;
+  display: flex;
+  align-items: start;
+  justify-content: flex-start;
+  flex-direction: column;
+  gap: var(--gap-m);
+}
+
+.filter-panel.show {
+  transform: translateY(0);
+}
+
+.filters-container-small-screen {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-m);
+  width: 100%;
+}
+
+.filters-container-small-screen img {
+  width: 20px;
+  height: 20px;
+}
+
+.actions-small-screen {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-m);
+  width: 100%;
+}
+
+.filters-container-small-screen .form-item > div {
+  width: 100%;
+}

@@ -19,6 +19,18 @@ export const FiltersSection = () => {
   const filterContainer = document.createElement("div");
   filterContainer.classList.add("filter-container");
 
+  const actionDiv = document.createElement("div");
+  actionDiv.classList.add("actions");
+
+  createFilters(filterContainer, actionDiv);
+
+  div.append(filterContainer);
+  div.append(actionDiv);
+
+  return div;
+};
+
+export const createFilters = (filterContainer, actionDiv) => {
   const searchTextInput = Input({
     id: "search",
     required: false,
@@ -63,17 +75,6 @@ export const FiltersSection = () => {
 
   filterContainer.append(searchTextInput, categories, type, time, location);
 
-  const actionDiv = document.createElement("div");
-  actionDiv.classList.add("actions");
-
-  const sorting = Select({
-    labelText: "sorting",
-    id: "sorting",
-    options: SORTING,
-    className: "form-dropdown-wrapper dark",
-    itemAction: filter,
-  });
-
   const checkFilters = () => {
     const queryElement = document.querySelector("#search");
 
@@ -96,6 +97,15 @@ export const FiltersSection = () => {
     );
   };
 
+  const sorting = Select({
+    labelText: "sorting",
+    id: "sorting",
+    options: SORTING,
+    className: "form-dropdown-wrapper dark",
+    value: SORTING[0].label,
+    itemAction: filter,
+  });
+
   const resetFilterButton = Button({
     label: "reset filters",
     className: "filled",
@@ -104,11 +114,6 @@ export const FiltersSection = () => {
     disabled: true,
   });
 
-  actionDiv.append(sorting, resetFilterButton);
-
-  div.append(filterContainer);
-  div.append(actionDiv);
-
   const updateButtonState = () => {
     resetFilterButton.disabled = !checkFilters();
     checkFilters()
@@ -116,18 +121,11 @@ export const FiltersSection = () => {
       : resetFilterButton.classList.add("disabled");
   };
 
+  actionDiv.append(sorting, resetFilterButton);
+
   searchTextInput.addEventListener("input", updateButtonState);
   categories.addEventListener("click", updateButtonState);
   type.addEventListener("click", updateButtonState);
   time.addEventListener("click", updateButtonState);
   location.addEventListener("input", updateButtonState);
-
-  setTimeout(() => {
-    const sortingDropdown = document.querySelector(
-      "#sorting-dropdown-wrapper span"
-    );
-    sortingDropdown.textContent = SORTING[0].label;
-  }, 500);
-
-  return div;
 };

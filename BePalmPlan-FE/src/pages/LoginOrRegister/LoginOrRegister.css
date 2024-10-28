@@ -1,5 +1,5 @@
 .modal-content {
-  width: clamp(300px, 40%, 600px);
+  width: clamp(400px, 40%, 500px);
   background-color: var(--white-color);
   border-radius: var(--border-radius-s);
   margin: 0 auto;

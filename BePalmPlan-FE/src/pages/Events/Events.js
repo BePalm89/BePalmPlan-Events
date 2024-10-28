@@ -9,6 +9,7 @@ import { displayEvents } from "../../utils/functions/displayEvents";
 import { openModal } from "../../utils/functions/openModal";
 import { FiltersSection } from "../../components/FiltersSection/FilterSection";
 import { NoResults } from "../../components/NoResults/NoResults";
+import { FilterSectionSmallerScreen } from "../../components/FilterSectionSmallerScreen/FilterSectionSmallerScreen";
 
 export const Events = async () => {
   const div = createPage("events");
@@ -41,7 +42,8 @@ export const Events = async () => {
   );
 
   actionDiv.append(headerDiv);
-  actionDiv.append(FiltersSection());
+  const filterSectionLargeScreen = FiltersSection();
+  const filterSectionSmallerScreen = FilterSectionSmallerScreen();
 
   const eventListContainer = document.createElement("div");
   eventListContainer.classList.add("events-list-container");
@@ -52,6 +54,23 @@ export const Events = async () => {
     eventListContainer.innerHTML = "";
     eventListContainer.append(NoResults({ text: "No events found" }));
   }
+
+  const renderFilters = () => {
+    filterSectionLargeScreen.style.display = "none";
+    filterSectionSmallerScreen.style.display = "none";
+
+    if (window.innerWidth >= 1024) {
+      filterSectionLargeScreen.style.display = "block";
+      actionDiv.append(filterSectionLargeScreen);
+    } else {
+      filterSectionSmallerScreen.style.display = "block";
+      actionDiv.append(filterSectionSmallerScreen);
+    }
+  };
+
+  renderFilters();
+
+  window.addEventListener("resize", renderFilters);
 
   div.append(actionDiv);
   div.append(eventListContainer);

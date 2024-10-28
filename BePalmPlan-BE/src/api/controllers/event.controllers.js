@@ -9,13 +9,10 @@ dayjs.extend(isBetween);
 export const getAllEvents = async (req, res, next) => {
   const today = new Date();
 
-  const { sort } = req.query;
-
   try {
-    const sortCriteria = sort === "relevance" ? { attendees: -1 } : { date: 1 };
-    const events = await Event.find({ date: { $gte: today } }).sort(
-      sortCriteria
-    );
+    const events = await Event.find({ date: { $gte: today } }).sort({
+      date: 1,
+    });
     res.status(200).json(events);
   } catch (error) {
     return next(error);
@@ -149,8 +146,11 @@ export const searchEvents = async (req, res, next) => {
       }
     }
 
-    const sortCriteria = sort === "relevance" ? { attendees: -1 } : { date: 1 };
-    const filteredEvents = await Event.find(searchCriteria).sort(sortCriteria);
+    const filteredEvents = await Event.aggregate([
+      { $match: searchCriteria },
+      { $addFields: { attendeeCount: { $size: "$attendees" } } },
+      { $sort: sort === "relevance" ? { attendeeCount: -1 } : { date: 1 } },
+    ]);
 
     return res.status(200).json(filteredEvents);
   } catch (error) {

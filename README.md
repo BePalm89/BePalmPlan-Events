@@ -264,9 +264,9 @@ export const locationSeeds = () => {
 
 ## Location endpoint
 
-| ENDPOINT | METHOD | DESCRIPTION                                                                        | REQUEST BODY                        | RESPONSE                                         | MIDDLEWARE |
-| -------- | ------ | ---------------------------------------------------------------------------------- | ----------------------------------- | ------------------------------------------------ | ---------- |
-| /search  | GET    | Retrieves all the location that matches the condition with city parameter          |                                     | 200 OK with the list of the filtered locations   | isAuth     |
+| ENDPOINT | METHOD | DESCRIPTION                                                               | REQUEST BODY | RESPONSE                                       | MIDDLEWARE |
+| -------- | ------ | ------------------------------------------------------------------------- | ------------ | ---------------------------------------------- | ---------- |
+| /search  | GET    | Retrieves all the location that matches the condition with city parameter |              | 200 OK with the list of the filtered locations | isAuth     |
 
 ## Deployment
 
@@ -315,3 +315,5 @@ In the page the user can see the list of the event is attending, hosting, favori
 This is the dialog for creating a new event
 
 ![Create event dialog](/Design/create_event.png)
+
+// https://chatgpt.com/c/671f529a-2920-800f-a2f4-5efd09ba3b30#project-overview
