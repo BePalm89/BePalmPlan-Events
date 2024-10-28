@@ -9,6 +9,7 @@ export const Select = ({
   className,
   selectAction,
   itemAction,
+  value,
 }) => {
   const div = document.createElement("div");
   div.classList.add("select-container");
@@ -35,7 +36,7 @@ export const Select = ({
   // Placeholder and selected item
   const span = document.createElement("span");
   selectWrapper.append(span);
-  span.textContent = `Any ${labelText}`;
+  span.textContent = value ?? `Any ${labelText}`;
 
   // Options
   const ul = document.createElement("ul");

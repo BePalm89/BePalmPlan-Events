@@ -4,6 +4,7 @@ export const DatePicker = ({
   required = true,
   min,
   datePickerAction,
+  value,
 }) => {
   // Wrapper
   const div = document.createElement("div");
@@ -19,6 +20,9 @@ export const DatePicker = ({
   input.type = "datetime-local";
   input.id = id;
   input.min = min;
+
+  const formattedValue = value && new Date(value).toISOString().slice(0, 16);
+  input.value = formattedValue ?? null;
 
   //Error
   const error = document.createElement("span");

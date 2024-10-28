@@ -11,6 +11,7 @@ export const Autosuggest = ({
   hasIcon = false,
   autosuggestAction,
   placeholder = "",
+  value,
 }) => {
   // Container
   const div = document.createElement("div");
@@ -36,6 +37,7 @@ export const Autosuggest = ({
   input.type = "text";
   input.id = id;
   input.placeholder = placeholder;
+  input.value = value ?? null;
 
   formItemDiv.append(input);
 

@@ -9,6 +9,7 @@ export const Input = ({
   placeholder,
   hasIcon = false,
   hasLabel = true,
+  value,
 }) => {
   const div = document.createElement("div");
   div.classList.add("form-item");
@@ -25,6 +26,7 @@ export const Input = ({
   input.type = type;
   input.id = id;
   input.placeholder = placeholder ?? "";
+  input.value = value && type !== "file" ? value : "";
 
   div.append(input);
 
@@ -69,7 +71,7 @@ export const Input = ({
 
     const spanFile = document.createElement("span");
     spanFile.id = "file-chosen";
-    spanFile.textContent = "No file chosen";
+    spanFile.textContent = value ?? "No file chosen";
 
     input.addEventListener("change", () => {
       spanFile.textContent = input.files[0].name;

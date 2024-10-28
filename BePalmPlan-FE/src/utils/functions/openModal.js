@@ -1,8 +1,7 @@
 import { CreateEvent } from "../../pages/CreateEvent/CreateEvent";
 import { LoginOrRegister } from "../../pages/LoginOrRegister/LoginOrRegister";
 
-export const openModal = (btn) => {
-  console.log(btn);
+export const openModal = (btn, event) => {
   const mainElement = document.querySelector("main");
 
   const modal = document.createElement("div");
@@ -10,6 +9,8 @@ export const openModal = (btn) => {
 
   if (btn === "create") {
     modal.append(CreateEvent());
+  } else if (btn === "edit") {
+    modal.append(CreateEvent(event, true));
   } else {
     modal.append(LoginOrRegister(btn));
   }

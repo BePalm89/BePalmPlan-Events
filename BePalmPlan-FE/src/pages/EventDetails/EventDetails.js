@@ -10,6 +10,7 @@ import { AttendeesSection } from "../../components/AttendeesSection/AttendessSec
 import { PageHeader } from "../../components/PageHeader/PageHeader";
 import { attendEvent } from "../../utils/functions/attendEvent";
 import { notGoingToEvent } from "../../utils/functions/notGoingToEvent";
+import { openModal } from "../../utils/functions/openModal";
 export const EventDetails = async () => {
   const div = createPage("event-details");
 
@@ -34,6 +35,8 @@ export const EventDetails = async () => {
   const visibilityButton =
     user._id !== data.createBy._id && !isAlreadyAttendingEvent;
 
+  const isEventCreatedByTheLoggedUser = user._id === data.createBy._id;
+
   div.append(
     PageHeader({
       titleLabel: data.title,
@@ -48,6 +51,19 @@ export const EventDetails = async () => {
           isButtonVisible: isAlreadyAttendingEvent,
           btnLabel: "not going",
           btnFnc: (e) => notGoingToEvent(e, data),
+          btnId: "attend",
+          btnStyle: "outline",
+        },
+        {
+          isButtonVisible: isEventCreatedByTheLoggedUser,
+          btnLabel: "edit event",
+          btnFnc: () => openModal("edit", data),
+          btnId: "edit",
+        },
+        {
+          isButtonVisible: isEventCreatedByTheLoggedUser,
+          btnLabel: "delete event",
+          btnFnc: (e) => console.log(e),
           btnId: "attend",
           btnStyle: "outline",
         },

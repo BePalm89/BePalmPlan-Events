@@ -5,8 +5,16 @@ import { Events } from "../../pages/Events/Events";
 import { Banner } from "../../components/Banner/Banner";
 import { isFormValid } from "./formValidation";
 import { formattedCategory } from "../functions/formatting";
-export const handleCreateEvent = async (e) => {
+export const handleCreateEvent = async (
+  e,
+  isEdit,
+  photoValue = false,
+  event
+) => {
   e.preventDefault();
+
+  console.log(event);
+  console.log(isEdit);
 
   const userFromLocalStorage = localStorage.getItem("user");
   const user = userFromLocalStorage ? JSON.parse(userFromLocalStorage) : {};
@@ -45,7 +53,11 @@ export const handleCreateEvent = async (e) => {
   }
 
   isValid =
-    isFormValid({ title, description, when, photo }, validationRules) &&
+    isFormValid(
+      { title, description, when, photo },
+      validationRules,
+      photoValue
+    ) &&
     isWhereValid &&
     isCategoriesValid &&
     isLocationValid;
@@ -62,23 +74,37 @@ export const handleCreateEvent = async (e) => {
   formData.append("location", locationValue);
   formData.append("date", when.value);
   formData.append("category", formattedCategory(categoryInput));
-  formData.append("imgEvent", photo.files[0]);
+  formData.append("imgEvent", photo.files[0] ?? event.imgEvent);
   formData.append("createBy", user._id);
 
   const token = localStorage.getItem("token");
 
+  const path = window.location.pathname;
+  const segments = path.split("/");
+  const eventId = segments[segments.length - 1];
+
+  const endpoint = isEdit
+    ? `${API_ENDPOINT.UPDATE_EVENT}/${eventId}`
+    : API_ENDPOINT.CREATE_EVENT;
+  const method = isEdit ? "PUT" : "POST";
+
   // Make the request
   const { data, status } = await makeRequest({
-    endpoint: API_ENDPOINT.CREATE_EVENT,
-    method: "POST",
+    endpoint,
+    method,
     isJSON: false,
     body: formData,
     token,
   });
 
   // Handle successfull result
-  if (status === 201) {
-    Banner(`Event ${data.title} created successfully!`, "success");
+  if (status === 201 || status === 200) {
+    Banner(
+      isEdit
+        ? `Event ${data.title} updated successfully!`
+        : `Event ${data.title} created successfully!`,
+      "success"
+    );
     navigate(e, { path: "/events", page: Events });
   }
 };

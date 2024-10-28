@@ -14,11 +14,13 @@ import { Autosuggest } from "../../components/Autosuggest/Autosuggest";
 import { Button } from "../../components/Button/Button";
 import { handleCreateEvent } from "../../utils/functions/handleCreateEvent";
 
-export const CreateEvent = () => {
+export const CreateEvent = (event, isEdit = false) => {
   const div = document.createElement("div");
 
+  const pageId = isEdit ? "edit-event" : "create-event";
+
   div.classList.add("modal-content");
-  div.id = "create-event";
+  div.id = pageId;
 
   const form = document.createElement("form");
   form.classList.add("create-event-form");
@@ -29,6 +31,7 @@ export const CreateEvent = () => {
     id: "title",
     required: true,
     inputAction: (e) => handleErrors(e, "text"),
+    value: isEdit ? event.title : "",
   });
 
   const descriptionTextArea = TextArea({
@@ -38,7 +41,12 @@ export const CreateEvent = () => {
     cols: 50,
     required: true,
     textAreaAction: (e) => handleErrors(e, "text"),
+    value: isEdit ? event.description : "",
   });
+
+  const selectedCategory =
+    isEdit &&
+    CATEGORIES.find((category) => category.value === event.category).label;
 
   const categorySelect = Select({
     labelText: "category",
@@ -47,9 +55,13 @@ export const CreateEvent = () => {
     hasLabel: true,
     required: true,
     className: "form-dropdown-wrapper",
+    value: isEdit ? selectedCategory : null,
   });
 
   let locationAutosuggest = null;
+
+  const selectedType =
+    isEdit && event.location === "online" ? TYPE[1].label : TYPE[2].label;
 
   const whereSelect = Select({
     labelText: "Where",
@@ -58,6 +70,7 @@ export const CreateEvent = () => {
     hasLabel: true,
     required: true,
     className: "form-dropdown-wrapper",
+    value: isEdit ? selectedType : null,
     selectAction: (e) => {
       if (e.target.textContent === "in person") {
         if (!locationAutosuggest) {
@@ -76,6 +89,20 @@ export const CreateEvent = () => {
     },
   });
 
+  const isInPerson = isEdit && event.location !== "online";
+
+  form.append(titleInput, descriptionTextArea, categorySelect, whereSelect);
+
+  if (isInPerson) {
+    locationAutosuggest = Autosuggest({
+      labelText: "location",
+      id: "locations",
+      value: isEdit ? event.location : null,
+    });
+
+    form.insertBefore(locationAutosuggest, whereSelect.nextSibling);
+  }
+
   const today = new Date();
 
   const whenInput = DatePicker({
@@ -83,19 +110,23 @@ export const CreateEvent = () => {
     id: "when",
     min: ISODate(today),
     datePickerAction: (e) => handleErrors(e, "date"),
+    value: isEdit ? event.date : null,
   });
+
+  const photoValue = event?.imgEvent.split("/").pop();
 
   const uploadPhotoInput = Input({
     labelText: "upload photo",
     id: "upload-photo",
     required: true,
     type: "file",
+    value: isEdit ? photoValue : null,
   });
 
   const createEventButton = Button({
-    label: "create",
+    label: isEdit ? "Edit" : "create",
     className: "filled",
-    id: "create-event",
+    id: isEdit ? "edit-event" : "create-event",
   });
 
   div.append(
@@ -105,17 +136,11 @@ export const CreateEvent = () => {
     form
   );
 
-  form.append(
-    titleInput,
-    descriptionTextArea,
-    categorySelect,
-    whereSelect,
-    uploadPhotoInput,
-    whenInput,
-    createEventButton
-  );
+  form.append(uploadPhotoInput, whenInput, createEventButton);
 
-  form.addEventListener("submit", handleCreateEvent);
+  form.addEventListener("submit", (e) =>
+    handleCreateEvent(e, isEdit, photoValue, event)
+  );
 
   return div;
 };

@@ -7,6 +7,7 @@ export const TextArea = ({
   cols,
   required = true,
   textAreaAction,
+  value,
 }) => {
   const div = document.createElement("div");
   div.classList.add("form-item");
@@ -21,6 +22,7 @@ export const TextArea = ({
   textArea.setAttribute("id", id);
   textArea.setAttribute("rows", rows);
   textArea.setAttribute("cols", cols);
+  textArea.value = value ?? "";
 
   div.append(textArea);
 
