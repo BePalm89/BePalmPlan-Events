@@ -28,6 +28,18 @@ export const EventCard = (event) => {
     div.append(onlineDiv);
   }
 
+  // Attendees
+
+  const attendeesContainer = document.createElement("div");
+  attendeesContainer.classList.add("attendees-container");
+
+  const attendeesNumber = document.createElement("p");
+  attendeesNumber.textContent = event.attendees.length;
+
+  attendeesContainer.append(attendeesNumber);
+
+  div.append(attendeesContainer);
+
   if (event.createBy !== user._id) {
     const favoriteContainer = document.createElement("div");
     favoriteContainer.classList.add("favorite-container");
