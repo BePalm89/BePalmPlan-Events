@@ -11,15 +11,16 @@ import { PageHeader } from "../../components/PageHeader/PageHeader";
 import { attendEvent } from "../../utils/functions/attendEvent";
 import { notGoingToEvent } from "../../utils/functions/notGoingToEvent";
 import { openModal } from "../../utils/functions/openModal";
-export const EventDetails = async () => {
+export const EventDetails = async (eventId) => {
   const div = createPage("event-details");
+  console.log("here");
 
   const path = window.location.pathname;
   const segments = path.split("/");
-  const eventId = segments[segments.length - 1];
+  const id = eventId ?? segments[segments.length - 1];
 
   const { data } = await makeRequest({
-    endpoint: `${API_ENDPOINT.GET_EVENT_BY_ID}/${eventId}`,
+    endpoint: `${API_ENDPOINT.GET_EVENT_BY_ID}/${id}`,
     hasToken: true,
   });
 

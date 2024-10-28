@@ -4,17 +4,16 @@ import { Header } from "./src/components/Header/Header";
 import { Home } from "./src/pages/Home/Home";
 import { Main } from "./src/components/Main/Main";
 import { Footer } from "./src/components/Footer/Footer";
-import { Events } from "./src/pages/Events/Events";
+import { router } from "./src/utils/routes/routes";
 
 Header();
 Main();
+Footer();
 
 const token = localStorage.getItem("token");
 
 if (token) {
-  Events(); // handle routes correctly
+  router();
 } else {
   Home();
 }
-
-Footer();
