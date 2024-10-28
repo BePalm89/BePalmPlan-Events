@@ -14,6 +14,12 @@ export const Events = async () => {
 
   const data = await getAllEvents();
 
+  const user = JSON.parse(localStorage.getItem("user"));
+
+  const eventsNotCreated = data.filter(
+    (event) => event.createBy !== user._id.toString()
+  );
+
   const actionDiv = document.createElement("div");
   actionDiv.classList.add("events-page-header-filters");
 
@@ -39,7 +45,7 @@ export const Events = async () => {
   const eventListContainer = document.createElement("div");
   eventListContainer.classList.add("events-list-container");
 
-  displayEvents(data, eventListContainer);
+  displayEvents(eventsNotCreated, eventListContainer);
 
   div.append(actionDiv);
   div.append(eventListContainer);

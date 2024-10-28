@@ -65,7 +65,14 @@ export const filter = async () => {
       token,
     });
     const container = document.querySelector(".events-list-container");
-    displayEvents(data, container);
+
+    const user = JSON.parse(localStorage.getItem("user"));
+
+    const eventsNotCreated = data.filter(
+      (event) => event.createBy !== user._id.toString()
+    );
+
+    displayEvents(eventsNotCreated, container);
   }
 };
 
