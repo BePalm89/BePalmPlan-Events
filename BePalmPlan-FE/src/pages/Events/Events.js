@@ -60,7 +60,7 @@ export const Events = async () => {
     filterSectionSmallerScreen.style.display = "none";
 
     if (window.innerWidth >= 1024) {
-      filterSectionLargeScreen.style.display = "block";
+      filterSectionLargeScreen.style.display = "flex";
       actionDiv.append(filterSectionLargeScreen);
     } else {
       filterSectionSmallerScreen.style.display = "block";
