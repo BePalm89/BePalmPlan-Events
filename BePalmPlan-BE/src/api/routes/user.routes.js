@@ -19,8 +19,6 @@ const router = express.Router();
  3. get user by id with Auth
  4. add favorite events with Auth
  5. delete favorite events with Auth
- 5. add attend events with is Auth
- 6. delete attend events with is Auth
  7. logout
 */
 

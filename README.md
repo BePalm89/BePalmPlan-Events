@@ -1,13 +1,14 @@
 # BePalmPlan-Events
 
-This project includes backend, with `node.js`, `express` and frontend with `vanilla javascript`. The topic is Event and Attendee Management. There is:
+This project is a fullstack project. The BE is done with `node.js`, `express` and `mongoDB` and frontend with `vanilla javascript`. The topic is Event and Attendee Management. There is:
 
-- **landing page** that show what the user can do with the application, like search event by topic or location, filter the event byt some categories like travel, art or technology.
-- **register page** where the user can register to the application
-- **login page** where the user can login inside the application
-- **home page** where the user can see the list of the events, can add favorite events and can search the event based on the topic or location, also can create new event
-- **my event page** where the user can see which favorite or attend event has saved, and which event had created, the user can also modify or delete his/her created event
-- **detail page of the event** where the user can see the details of an event and choose to attend to it
+- **landing page**: that shows what the user can do with the application, like search event by location or categories like travel, art or technology.
+- **register page**: the user can register to the application entering a username, email, password and chose and avatar
+- **login page**: the user can login in the application using email and password
+- **home page**: the user can see the list of events, can add and remove favorite events and can search the event based on the topic, location, categories and time, the user can also create new event
+- create event page\*\*: the logged user can create an event, choosing the title, description, category, location, date and image
+- **my event page**: the user can see which favorite or attend event has saved, and which event had created.
+- **detail page of the event**: the user can see the details of an event and choose to attend to it, if the logged user is the one that had created the event can also edit and delete the event.
 
 ### Acceptance criteria:
 
@@ -16,19 +17,19 @@ This project includes backend, with `node.js`, `express` and frontend with `vani
 - [x] Implement middleware that verifies the presence and validity of the token in protected routes.
 - [x] Protect routes that allow actions exclusive to authenticated users.
 - [x] File uploads (e.g., avatars or event posters).
-- [ ] Controllers that sort information based on some criteria.
+- [x] Controllers that sort information based on some criteria.
 - [x] Controllers that insert an element from one collection into another.
-- [ ] Implement a login form for users to enter the system. If a user does not exist, register a new one. Registration logs in the user after registering to save an unnecessary step.
-- [ ] Display a list of available events. Authenticated users will see additional options to create events and confirm attendance.
-- [ ] Allow users to explore details of each event and the list of attendees.
-- [ ] Implement proper error handling in the frontend and backend. All frontend forms have error control to inform the user of any issues.
-- [ ] All asynchronous processes show a loading indicator to the user to provide immediate feedback.
-- [ ] Focus on componentization, ensuring no code is repeated.
-- [ ] Fetch requests are reused through a single function, allowing all fetches to be made using the same method.
+- [x] Implement a login form for users to enter the system. If a user does not exist, register a new one. Registration logs in the user after registering to save an unnecessary step.
+- [x] Display a list of available events. Authenticated users will see additional options to create events and confirm attendance.
+- [x] Allow users to explore details of each event and the list of attendees.
+- [x] Implement proper error handling in the frontend and backend. All frontend forms have error control to inform the user of any issues.
+- [x] All asynchronous processes show a loading indicator to the user to provide immediate feedback.
+- [x] Focus on componentization, ensuring no code is repeated.
+- [x] Fetch requests are reused through a single function, allowing all fetches to be made using the same method.
 
 ### BE Implementation:
 
-We have three models: one for the users, one for the event and one for the location.
+I implemented three models: users, event and location.
 
 ## User model:
 
@@ -41,18 +42,16 @@ We have three models: one for the users, one for the event and one for the locat
     favoriteEvents: [
       { type: mongoose.Types.ObjectId, required: false, ref: "events" },
     ],
-    attendEvents: [
-      { type: mongoose.Types.ObjectId, required: false, ref: "events" },
-    ],
     profileImg: { type: String, required: false },
   },
 ```
 
-When registering and logging in the user, the library `bcrypt` is used to encrypt the password. The users have 2 array for storing favorite events and attend events, that are `Event` object.
+When registering and logging in the user, the library `bcrypt` is used to encrypt the password. The users have an array for storing favorite events, that are `Event` object.
 
 ## Event model
 
 ```javascript
+  {
     title: { type: String, required: true },
     description: { type: String, required: true },
     location: { type: String, required: true },
@@ -60,7 +59,7 @@ When registering and logging in the user, the library `bcrypt` is used to encryp
     category: {
       type: String,
       required: true,
-      enum: ["hobbies", "art", "health", "travel", "sport", "social", "tech"],
+      enum: ["hobbies-passions", "art-culture", "health-wellbeing", "travel-outdoor", "sport-fitness", "social-activities", "technology"],
     },
     attendees: [
       {
@@ -75,6 +74,7 @@ When registering and logging in the user, the library `bcrypt` is used to encryp
       ref: "users",
     },
     imgEvent: { type: String, required: true },
+  },
 ```
 
 The event model has a `createBy` field that is the user who created the event and an array of `attendees` to have a list of user that will attend that particular event.
@@ -84,25 +84,15 @@ The event model has a `createBy` field that is the user who created the event an
 ```javascript
 import mongoose from "mongoose";
 
-const locationSchema = new mongoose.Schema(
-  {
-    city: { type: String, required: true },
-    country: { type: String, required: true },
-  },
-  {
-    timestamps: true,
-    collection: "locations",
-  }
-);
-
-const Location = mongoose.model("locations", locationSchema, "locations");
-
-export default Location;
+const locationSchema = new mongoose.Schema({
+  city: { type: String, required: true },
+  country: { type: String, required: true },
+});
 ```
 
 ### Middleware
 
-I implemented two middleware, one for uploading file in cloudinary and the other one for authenticate the user with a token, using `jsonwebtoken` library.
+I implemented three middlewares, one for uploading file in cloudinary, the other one for authenticate the user with a token, using `jsonwebtoken` library and the last one for checking if the user has permission to edit or delete the event.
 
 ## Middleware for uploading file in cloudinary
 
@@ -149,6 +139,33 @@ export const isAuth = async (req, res, next) => {
 
     user.password = null;
     req.user = user;
+
+    next();
+  } catch (error) {
+    return next(error);
+  }
+};
+```
+
+### Middleware for edit and delete permission
+
+```javascript
+export const checkEventCreator = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const loggedUserId = req.user._id;
+
+    const event = await Event.findById(id);
+
+    if (!event) {
+      return res.status(404).json("Event not found");
+    }
+
+    if (event.createBy.toString() !== loggedUserId.toString()) {
+      return res
+        .status(403)
+        .json("Unauthorized action: You are not the creator of this event.");
+    }
 
     next();
   } catch (error) {
@@ -240,27 +257,29 @@ export const locationSeeds = () => {
 
 ## Users endpoint:
 
-| ENDPOINT                   | METHOD | DESCRIPTION                                                                                | REQUEST BODY                               | RESPONSE                               | MIDDLEWARE  |
-| -------------------------- | ------ | ------------------------------------------------------------------------------------------ | ------------------------------------------ | -------------------------------------- | ----------- |
-| /register                  | POST   | Register a new user                                                                        | username, password, email, profile picture | 200 OK with the registered user's info | upload file |
-| /login                     | POST   | Login a registered user                                                                    | email and password                         | 200 OK with token and the user obj     |             |
-| /:id                       | GET    | Retrieve the user´s info by their unique id                                                |                                            | 200 OK with all user's info            | isAuth      |
-| /add-favorite-event/:id    | PUT    | Add a favorite event to the logged user and add the attendee to the particular event       | event id                                   | 200 OK with all updated user's info    | isAuth      |
-| /remove-favorite-event/:id | PUT    | Remove a favorite event to the logged user and remove the attendee to the particular event | event id                                   | 200 OK with all updated user's info    | isAuth      |
-| /add-attend-event/:id      | PUT    | Add attend event to the logged user                                                        | event id                                   | 200 OK with all updated user's info    | isAuth      |
-| /remove-attend-event/:id   | PUT    | Remove an attend event to the logged user                                                  | event id                                   | 200 OK with all updated user's info    | isAuth      |
-| /logout                    | POST   | Logout the user from the application                                                       |                                            | 200 OK with a successfull message      | isAuth      |
+| ENDPOINT                   | METHOD | DESCRIPTION                                 | REQUEST BODY                               | RESPONSE                               | MIDDLEWARE  |
+| -------------------------- | ------ | ------------------------------------------- | ------------------------------------------ | -------------------------------------- | ----------- |
+| /register                  | POST   | Register a new user                         | username, password, email, profile picture | 200 OK with the registered user's info | upload file |
+| /login                     | POST   | Login a registered user                     | email, password                            | 200 OK with token and the user obj     |             |
+| /:id                       | GET    | Retrieve the user´s info by their unique id |                                            | 200 OK with all user's info            | isAuth      |
+| /add-favorite-event/:id    | PUT    | Add a favorite event to the logged user     | event id                                   | 200 OK with all updated user's info    | isAuth      |
+| /remove-favorite-event/:id | PUT    | Remove a favorite event to the logged user  | event id                                   | 200 OK with all updated user's info    | isAuth      |
+| /logout                    | POST   | Logout the user from the application        |                                            | 200 OK with a successfull message      | isAuth      |
 
 ## Events endpoint:
 
-| ENDPOINT | METHOD | DESCRIPTION                                                                        | REQUEST BODY                        | RESPONSE                                         | MIDDLEWARE |
-| -------- | ------ | ---------------------------------------------------------------------------------- | ----------------------------------- | ------------------------------------------------ | ---------- |
-| /        | GET    | Retrieves all events available in the DB                                           |                                     | 200 OK with the list of available events         | isAuth     |
-| /search  | GET    | Retrieves all events that matches the condition with query and location parameters |                                     | 200 OK with the list of filtered events          | isAuth     |
-| /:id     | GET    | Retrieve the details of an event by their unique ID                                |                                     | 200 OK with the details of a particular event    | isAuth     |
-| /create  | POST   | Create a new event                                                                 | Event obj                           | 201 OK with all the info about the new event     | isAuth     |
-| /:id     | PUT    | Update an event by their unique ID                                                 | Property of the event obj to update | 200 OK with all the info about the updated event | isAuth     |
-| /:id     | DELETE | Delete an event by their unique ID                                                 |                                     | 200 OK with a successfull message                | isAuth     |
+| ENDPOINT              | METHOD | DESCRIPTION                                                                        | REQUEST BODY                        | RESPONSE                                         | MIDDLEWARE         |
+| --------------------- | ------ | ---------------------------------------------------------------------------------- | ----------------------------------- | ------------------------------------------------ | ------------------ |
+| /                     | GET    | Retrieves all events available in the DB                                           |                                     | 200 OK with the list of available events         | isAuth             |
+| /search               | GET    | Retrieves all events that matches the condition with query and location parameters |                                     | 200 OK with the list of filtered events          | isAuth             |
+| /:id                  | GET    | Retrieve the details of an event by their unique ID                                |                                     | 200 OK with the details of a particular event    | isAuth             |
+| /create               | POST   | Create a new event                                                                 | Event obj                           | 201 OK with all the info about the new event     | isAuth             |
+| /:id                  | PUT    | Update an event by their unique ID                                                 | Property of the event obj to update | 200 OK with all the info about the updated event | isAuth, permission |
+| /:id                  | DELETE | Delete an event by their unique ID                                                 |                                     | 200 OK with a successfull message                | isAuth             |
+| /attending/:userId    | GET    | Retrieves all attending events by user id                                          |                                     | 200 OK with the list of attending event          | isAuth             |
+| /hosting/:userId      | GET    | Retrieves all hosting events by user id                                            |                                     | 200 OK with the list of hosting event            | isAuth             |
+| /add-attendees/:id    | POST   | Add the user to the event                                                          | User id                             | 201 OK with the updated event object             | isAuth             |
+| /remove-attendees/:id | DELETE | Remove the user from the event                                                     | User id                             | 200 OK with a successfull message                | isAuth             |
 
 ## Location endpoint
 
@@ -294,26 +313,28 @@ It is a dialog where the user need to enter the email and the password to be log
 
 ## Home page
 
-When the user is logged in, he/she will land to this page, it shows the event sorted by date. The user is able to filter by category, by the title of the event or the location. From the avatar, when clicking, there is a menu where the user can log out or land to the page where there are listed all the their events, favorite, hosting, attend or past.
+When the user is logged in, he/she will land on this page, it shows the event sorted by date and filtered to excluded the events that the logged user had created. The user is able to filter by category, by the title of the event, the location and time. moreover the user can sort the events by date and by relevance ( the user with more attendees). From the avatar, when clicking, there is a menu where the user can log out or land to the page where there are listed all the their events, favorite, hosting, attend or past. For every event the user can add or remove the event as favorite.
 
 ![Home page](/Design/home_page.png)
 
 ## Details page of the event
 
-Clicking on one of the event, the use navigate to this page to see the details of a particular event. If the event was created by the logger user, the user could see two button to edit or delete this event
+Clicking on one of the event, the use navigate to the details page that shows the details of the event. If the event was created by the logger user, the user could see two button to edit or delete this event. If the logged user is not the one that had created the event, will see a button to attend or not attend this event.
 
 ![Details event page](/Design/detail_event.png)
 
 ## My event page
 
-In the page the user can see the list of the event is attending, hosting, favorite or past. The user is also able in this view to create a new event.
+In the page the user can see the list of the event is attending, hosting, or favorite.
 
 ![My event event page](/Design/hosting_event.png)
 
 ## Create event dialog
 
-This is the dialog for creating a new event
+This is the dialog for creating a new event, the user should enter a title, description, category, location, image and date.
 
 ![Create event dialog](/Design/create_event.png)
 
-// https://chatgpt.com/c/671f529a-2920-800f-a2f4-5efd09ba3b30#project-overview
+### Edit event dialog
+
+This is the dialog for edit the event
