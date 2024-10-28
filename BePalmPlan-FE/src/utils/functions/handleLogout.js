@@ -5,12 +5,10 @@ import { API_ENDPOINT } from "../api/url.enum";
 import { navigate } from "./navigate";
 
 export const handleLogout = (e) => {
-  const token = localStorage.getItem("token");
-
   makeRequest({
     endpoint: API_ENDPOINT.LOGOUT_USER,
     method: "POST",
-    token: token,
+    hasToken: true,
     showSpinner: false,
   });
 

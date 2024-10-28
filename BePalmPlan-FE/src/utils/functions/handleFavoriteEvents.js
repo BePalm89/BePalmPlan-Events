@@ -6,7 +6,6 @@ export const handleFavorite = async (e, eventId, iconFavorite) => {
     iconFavorite.src.split("/").pop() === "like-filled.png";
 
   const user = JSON.parse(localStorage.getItem("user"));
-  const token = localStorage.getItem("token");
 
   const endpoint = isAlreadyFavorite
     ? `${API_ENDPOINT.REMOVE_FAVORITE_EVENT}/${user._id}`
@@ -19,7 +18,7 @@ export const handleFavorite = async (e, eventId, iconFavorite) => {
     endpoint,
     method: "PUT",
     body: { favoriteEvents: [eventId] },
-    token,
+    hasToken: true,
   });
 
   if (status === 200) {

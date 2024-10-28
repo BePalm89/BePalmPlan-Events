@@ -58,11 +58,9 @@ export const Events = async () => {
 };
 
 const getAllEvents = async () => {
-  const token = localStorage.getItem("token");
-
-  const { data, status } = await makeRequest({
+  const { data } = await makeRequest({
     endpoint: API_ENDPOINT.GET_ALL_EVENTS,
-    token: token,
+    hasToken: true,
   });
 
   return data;

@@ -5,8 +5,6 @@ import { API_ENDPOINT } from "../api/url.enum";
 import { navigate } from "./navigate";
 
 export const deleteEvent = async (e) => {
-  const token = localStorage.getItem("token");
-
   const path = window.location.pathname;
   const segments = path.split("/");
   const eventId = segments[segments.length - 1];
@@ -14,7 +12,7 @@ export const deleteEvent = async (e) => {
   const { status } = await makeRequest({
     endpoint: `${API_ENDPOINT.DELETE_EVENT}/${eventId}`,
     method: "DELETE",
-    token,
+    hasToken: true,
   });
 
   if (status === 200) {

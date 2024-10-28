@@ -11,7 +11,6 @@ export const showEventsBasedOnStatus = async (e, eventsContainer) => {
   e.target.classList.add("active");
 
   const user = JSON.parse(localStorage.getItem("user"));
-  const token = localStorage.getItem("token");
 
   const statusEndpoints = {
     attending: `${API_ENDPOINT.GET_ATTENDING_EVENTS}/${user._id}`,
@@ -24,7 +23,7 @@ export const showEventsBasedOnStatus = async (e, eventsContainer) => {
 
   const { data } = await makeRequest({
     endpoint,
-    token,
+    hasToken: true,
   });
 
   const events = statusEvent === "favorite" ? data.favoriteEvents : data;

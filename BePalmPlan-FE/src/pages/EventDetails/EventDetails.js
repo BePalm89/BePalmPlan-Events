@@ -18,11 +18,9 @@ export const EventDetails = async () => {
   const segments = path.split("/");
   const eventId = segments[segments.length - 1];
 
-  const token = localStorage.getItem("token");
-
   const { data } = await makeRequest({
     endpoint: `${API_ENDPOINT.GET_EVENT_BY_ID}/${eventId}`,
-    token,
+    hasToken: true,
   });
 
   const userFromLocalStorage = localStorage.getItem("user");

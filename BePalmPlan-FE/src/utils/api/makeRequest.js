@@ -8,12 +8,17 @@ export const makeRequest = async ({
   method = "GET",
   body,
   isJSON = true,
-  token = null,
+  hasToken = false,
   showSpinner = true,
 }) => {
-  const headers = {
-    Authorization: `Bearer ${token}`,
-  };
+  let headers = {};
+
+  if (hasToken) {
+    const token = localStorage.getItem("token");
+    headers = {
+      Authorization: `Bearer ${token}`,
+    };
+  }
 
   if (isJSON) {
     headers["Content-Type"] = "application/json";

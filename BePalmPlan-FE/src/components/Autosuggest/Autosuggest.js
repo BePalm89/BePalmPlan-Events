@@ -122,7 +122,6 @@ const handleAutosuggestList = (
   required,
   id
 ) => {
-  const token = localStorage.getItem("token");
   const query = e.target.value;
 
   error.textContent = "";
@@ -134,7 +133,7 @@ const handleAutosuggestList = (
     if (query) {
       const { status, data } = await makeRequest({
         endpoint: `${API_ENDPOINT.LOCATION_SEARCH}?city=${query}`,
-        token,
+        hasToken: true,
       });
 
       if (status === 200) {

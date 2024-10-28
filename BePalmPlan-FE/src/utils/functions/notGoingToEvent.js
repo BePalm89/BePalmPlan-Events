@@ -7,7 +7,6 @@ import { Banner } from "../../components/Banner/Banner";
 export const notGoingToEvent = async (e, event) => {
   const userFromLocalStorage = localStorage.getItem("user");
   const user = JSON.parse(userFromLocalStorage);
-  const token = localStorage.getItem("token");
 
   const { data, status } = await makeRequest({
     endpoint: `${API_ENDPOINT.REMOVE_ATTENDEES_TO_EVENT}/${event._id}`,
@@ -15,7 +14,7 @@ export const notGoingToEvent = async (e, event) => {
     body: {
       attendees: user._id,
     },
-    token,
+    hasToken: true,
   });
 
   if (status === 200) {

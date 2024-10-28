@@ -7,7 +7,6 @@ import { navigate } from "./navigate";
 export const attendEvent = async (e, event) => {
   const userFromLocalStorage = localStorage.getItem("user");
   const user = JSON.parse(userFromLocalStorage);
-  const token = localStorage.getItem("token");
 
   const { data, status } = await makeRequest({
     endpoint: `${API_ENDPOINT.ADD_ATTENDEES_TO_EVENT}/${event._id}`,
@@ -15,7 +14,7 @@ export const attendEvent = async (e, event) => {
     body: {
       attendees: user._id,
     },
-    token,
+    hasToken: true,
   });
 
   if (status === 200) {

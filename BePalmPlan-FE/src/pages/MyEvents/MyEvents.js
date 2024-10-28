@@ -12,11 +12,10 @@ export const MyEvents = async () => {
   const div = createPage("my-events");
 
   const user = JSON.parse(localStorage.getItem("user"));
-  const token = localStorage.getItem("token");
 
   const { data } = await makeRequest({
     endpoint: `${API_ENDPOINT.GET_ATTENDING_EVENTS}/${user._id}`,
-    token,
+    hasToken: true,
   });
 
   const header = PageHeader({

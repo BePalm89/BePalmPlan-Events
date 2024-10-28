@@ -7,8 +7,6 @@ import { formattedCategory } from "./formatting";
 import { NoResults } from "../../components/NoResults/NoResults";
 
 export const filter = async () => {
-  const token = localStorage.getItem("token");
-
   //Filter elements:
   const queryElement = document.querySelector("#search");
 
@@ -64,7 +62,7 @@ export const filter = async () => {
   if (queryString) {
     const { data } = await makeRequest({
       endpoint: `${API_ENDPOINT.SEARCH_EVENT}?${queryString}`,
-      token,
+      hasToken: true,
     });
     const container = document.querySelector(".events-list-container");
 

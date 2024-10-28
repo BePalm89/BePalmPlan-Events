@@ -77,8 +77,6 @@ export const handleCreateEvent = async (
   formData.append("imgEvent", photo.files[0] ?? event.imgEvent);
   formData.append("createBy", user._id);
 
-  const token = localStorage.getItem("token");
-
   const path = window.location.pathname;
   const segments = path.split("/");
   const eventId = segments[segments.length - 1];
@@ -94,7 +92,7 @@ export const handleCreateEvent = async (
     method,
     isJSON: false,
     body: formData,
-    token,
+    hasToken: true,
   });
 
   // Handle successfull result
