@@ -76,6 +76,10 @@ export const handleCreateEvent = async (
   formData.append("category", formattedCategory(categoryInput));
   formData.append("imgEvent", photo.files[0] ?? event.imgEvent);
   formData.append("createBy", user._id);
+  if (isEdit) {
+    const attendeesId = event.attendees.map((attendee) => attendee._id);
+    formData.append("attendees", attendeesId);
+  }
 
   const path = window.location.pathname;
   const segments = path.split("/");

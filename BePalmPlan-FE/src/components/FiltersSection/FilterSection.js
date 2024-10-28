@@ -10,11 +10,7 @@ import { Input } from "../Input/Input";
 import { Select } from "../Select/Select";
 import { Button } from "../Button/Button";
 
-import {
-  filter,
-  resetFilters,
-  handleSorting,
-} from "../../utils/functions/filters";
+import { filter, resetFilters } from "../../utils/functions/filters";
 
 export const FiltersSection = () => {
   const div = document.createElement("div");
@@ -75,7 +71,7 @@ export const FiltersSection = () => {
     id: "sorting",
     options: SORTING,
     className: "form-dropdown-wrapper dark",
-    selectAction: handleSorting,
+    itemAction: filter,
   });
 
   const checkFilters = () => {

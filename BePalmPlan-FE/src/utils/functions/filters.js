@@ -19,6 +19,11 @@ export const filter = async () => {
   const dateElement = document.querySelector("#time-dropdown-wrapper span");
 
   const locationElement = document.querySelector("#locations-filter");
+
+  const sortingElement = document.querySelector(
+    "#sorting-dropdown-wrapper span"
+  );
+
   // Filter values
   let query;
   if (queryElement.value) {
@@ -49,6 +54,12 @@ export const filter = async () => {
 
   const date = dateElement.textContent.toLocaleLowerCase().replace(" ", "-");
 
+  // Sorting
+
+  const sortText = sortingElement.textContent;
+  const sortIndexOf = sortText.indexOf(":");
+  const sort = sortText.substring(sortIndexOf + 1).trim();
+
   // Create params for BE
   const params = {};
 
@@ -56,6 +67,7 @@ export const filter = async () => {
   if (category) params.category = category;
   if (location) params.location = location;
   if (date) params.date = date;
+  if (sort === "relevance") params.sort = sort;
 
   const queryString = new URLSearchParams(params).toString();
 
@@ -109,8 +121,4 @@ export const resetFilters = () => {
 
   // get all events
   filter();
-};
-
-export const handleSorting = () => {
-  // Implement later when I have attendees for the events
 };
