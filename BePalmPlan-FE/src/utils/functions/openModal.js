@@ -1,4 +1,5 @@
-import { CreateEvent } from "../../pages/CreateEvent/CreateEvent";
+import { CreateEvent } from "../../pages/CreateEditEvent/CreateEditEvent";
+import { DeleteEvent } from "../../pages/DeleteEvent/DeleteEvent";
 import { LoginOrRegister } from "../../pages/LoginOrRegister/LoginOrRegister";
 
 export const openModal = (btn, event) => {
@@ -11,6 +12,8 @@ export const openModal = (btn, event) => {
     modal.append(CreateEvent());
   } else if (btn === "edit") {
     modal.append(CreateEvent(event, true));
+  } else if (btn === "delete") {
+    modal.append(DeleteEvent());
   } else {
     modal.append(LoginOrRegister(btn));
   }

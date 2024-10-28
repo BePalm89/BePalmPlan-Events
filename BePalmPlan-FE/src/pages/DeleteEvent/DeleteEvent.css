@@ -1,0 +1,6 @@
+.cta-container {
+  display: flex;
+  gap: var(--gap-m);
+  justify-content: flex-end;
+  margin-top: var(--margin-m);
+}

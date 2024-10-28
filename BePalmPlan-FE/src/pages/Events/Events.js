@@ -8,6 +8,7 @@ import { Button } from "../../components/Button/Button";
 import { displayEvents } from "../../utils/functions/displayEvents";
 import { openModal } from "../../utils/functions/openModal";
 import { FiltersSection } from "../../components/FiltersSection/FilterSection";
+import { NoResults } from "../../components/NoResults/NoResults";
 
 export const Events = async () => {
   const div = createPage("events");
@@ -46,6 +47,11 @@ export const Events = async () => {
   eventListContainer.classList.add("events-list-container");
 
   displayEvents(eventsNotCreated, eventListContainer);
+
+  if (!eventsNotCreated.length) {
+    eventListContainer.innerHTML = "";
+    eventListContainer.append(NoResults({ text: "No events found" }));
+  }
 
   div.append(actionDiv);
   div.append(eventListContainer);

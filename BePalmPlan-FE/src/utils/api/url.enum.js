@@ -15,4 +15,5 @@ export const API_ENDPOINT = Object.freeze({
   GET_HOSTING_EVENTS: "/events/hosting",
   ADD_ATTENDEES_TO_EVENT: "/events/add-attendees",
   REMOVE_ATTENDEES_TO_EVENT: "/events/remove-attendees",
+  DELETE_EVENT: "/events",
 });

@@ -1,4 +1,4 @@
-import "./CreateEvent.css";
+import "./CreateEditEvent.css";
 
 import { Input } from "../../components/Input/Input";
 import { Logo } from "../../components/Logo/Logo";

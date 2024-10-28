@@ -20,7 +20,7 @@ export const EventDetails = async () => {
 
   const token = localStorage.getItem("token");
 
-  const { data, status } = await makeRequest({
+  const { data } = await makeRequest({
     endpoint: `${API_ENDPOINT.GET_EVENT_BY_ID}/${eventId}`,
     token,
   });
@@ -63,7 +63,7 @@ export const EventDetails = async () => {
         {
           isButtonVisible: isEventCreatedByTheLoggedUser,
           btnLabel: "delete event",
-          btnFnc: (e) => console.log(e),
+          btnFnc: (e) => openModal("delete"),
           btnId: "attend",
           btnStyle: "outline",
         },

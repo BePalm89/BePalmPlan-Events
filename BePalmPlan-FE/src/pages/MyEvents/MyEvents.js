@@ -7,17 +7,17 @@ import { showEventsBasedOnStatus } from "../../utils/functions/showEventsBasedOn
 import { makeRequest } from "../../utils/api/makeRequest";
 import { API_ENDPOINT } from "../../utils/api/url.enum";
 import { displayEvents } from "../../utils/functions/displayEvents";
+import { NoResults } from "../../components/NoResults/NoResults";
 export const MyEvents = async () => {
   const div = createPage("my-events");
 
   const user = JSON.parse(localStorage.getItem("user"));
   const token = localStorage.getItem("token");
 
-  const { data, status } = await makeRequest({
+  const { data } = await makeRequest({
     endpoint: `${API_ENDPOINT.GET_ATTENDING_EVENTS}/${user._id}`,
     token,
   });
-  console.log(data);
 
   const header = PageHeader({
     titleLabel: "My events",
@@ -35,6 +35,13 @@ export const MyEvents = async () => {
   eventsContainer.classList.add("events-list-container");
 
   displayEvents(data, eventsContainer);
+
+  if (!data.length) {
+    eventsContainer.innerHTML = "";
+    eventsContainer.append(
+      NoResults({ text: "You have not registered for any events" })
+    );
+  }
 
   div.append(header, eventStatusBar, eventsContainer);
 

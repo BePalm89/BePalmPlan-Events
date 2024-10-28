@@ -4,6 +4,8 @@ import { makeRequest } from "../api/makeRequest";
 import { displayEvents } from "./displayEvents";
 import { formattedCategory } from "./formatting";
 
+import { NoResults } from "../../components/NoResults/NoResults";
+
 export const filter = async () => {
   const token = localStorage.getItem("token");
 
@@ -60,7 +62,7 @@ export const filter = async () => {
   const queryString = new URLSearchParams(params).toString();
 
   if (queryString) {
-    const { data, status } = await makeRequest({
+    const { data } = await makeRequest({
       endpoint: `${API_ENDPOINT.SEARCH_EVENT}?${queryString}`,
       token,
     });
@@ -73,6 +75,11 @@ export const filter = async () => {
     );
 
     displayEvents(eventsNotCreated, container);
+
+    if (!eventsNotCreated.length) {
+      container.innerHTML = "";
+      container.append(NoResults({ text: "No events found" }));
+    }
   }
 };
 
