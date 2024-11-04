@@ -13,7 +13,6 @@ import { notGoingToEvent } from "../../utils/functions/notGoingToEvent";
 import { openModal } from "../../utils/functions/openModal";
 export const EventDetails = async (eventId) => {
   const div = createPage("event-details");
-  console.log("here");
 
   const path = window.location.pathname;
   const segments = path.split("/");

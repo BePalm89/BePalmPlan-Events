@@ -13,9 +13,6 @@ export const handleCreateEvent = async (
 ) => {
   e.preventDefault();
 
-  console.log(event);
-  console.log(isEdit);
-
   const userFromLocalStorage = localStorage.getItem("user");
   const user = userFromLocalStorage ? JSON.parse(userFromLocalStorage) : {};
   // Get the value of the input

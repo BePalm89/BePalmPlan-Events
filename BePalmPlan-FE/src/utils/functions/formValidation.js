@@ -2,7 +2,6 @@ import { hideError, showError, validateEmail } from "./handleErrors";
 
 export const isFormValid = (inputs, validationRules, photoValue) => {
   let isValid = true;
-  console.log(photoValue);
   Object.keys(inputs).forEach((key) => {
     const input = inputs[key];
     const rules = validationRules[key];
@@ -15,7 +14,6 @@ export const isFormValid = (inputs, validationRules, photoValue) => {
       (rules.required && !input.value) ||
       (input.type === "file" && rules.hasFile && !input.files[0] && !photoValue)
     ) {
-      console.log(input.files);
       showError(errorSpan, input, "This field is required");
       isValid = false;
     } else if (rules.email && !validateEmail(input.value)) {
