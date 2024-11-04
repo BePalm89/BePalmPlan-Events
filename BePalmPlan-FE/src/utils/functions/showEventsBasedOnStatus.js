@@ -28,8 +28,6 @@ export const showEventsBasedOnStatus = async (e, eventsContainer) => {
 
   const events = statusEvent === "favorite" ? data.favoriteEvents : data;
 
-  console.log(statusEvent);
-
   let textToDisplay;
   if (statusEvent === "attending") {
     textToDisplay = "You have not registered for any events";
