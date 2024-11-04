@@ -5,7 +5,7 @@ export const API_ENDPOINT = Object.freeze({
   REGISTER_USER: "/users/register",
   ADD_FAVORITE_EVENT: "/users/add-favorite-event",
   REMOVE_FAVORITE_EVENT: "/users/remove-favorite-event",
-  GET_USER_BY_ID: "/users/",
+  GET_USER_BY_ID: "/users",
   GET_ALL_EVENTS: "/events",
   GET_EVENT_BY_ID: "/events",
   UPDATE_EVENT: "/events",
