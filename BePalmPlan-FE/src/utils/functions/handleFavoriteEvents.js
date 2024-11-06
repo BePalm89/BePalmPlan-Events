@@ -19,6 +19,7 @@ export const handleFavorite = async (e, eventId, iconFavorite) => {
     method: "PUT",
     body: { favoriteEvents: [eventId] },
     hasToken: true,
+    showSpinner: false,
   });
 
   if (status === 200) {

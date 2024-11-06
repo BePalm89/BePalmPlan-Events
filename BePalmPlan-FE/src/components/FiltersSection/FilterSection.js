@@ -37,7 +37,7 @@ export const createFilters = (filterContainer, actionDiv) => {
     placeholder: "Search for events",
     hasIcon: true,
     hasLabel: false,
-    inputAction: filter,
+    iconAction: filter,
   });
 
   const categories = Select({

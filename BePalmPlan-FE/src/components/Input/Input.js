@@ -8,6 +8,7 @@ export const Input = ({
   type = "text",
   placeholder,
   hasIcon = false,
+  iconAction,
   hasLabel = true,
   value,
 }) => {
@@ -50,6 +51,7 @@ export const Input = ({
 
     inputIconContainer.append(input);
     inputIconContainer.append(iconContainer);
+    inputIconContainer.addEventListener("click", iconAction);
     div.append(inputIconContainer);
   }
 

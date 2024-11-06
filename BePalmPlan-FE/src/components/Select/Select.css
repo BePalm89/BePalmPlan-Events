@@ -63,6 +63,7 @@
 .dropdown-wrapper.is-active .dropdown-list {
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   max-height: fit-content;
+  z-index: 2;
 }
 
 .dropdown-wrapper.is-active .dropdown-list li {

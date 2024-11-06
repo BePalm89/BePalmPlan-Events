@@ -29,16 +29,19 @@ export const EventCard = (event) => {
   }
 
   // Attendees
+  if (event.attendees.length) {
+    const attendeesContainer = document.createElement("div");
+    attendeesContainer.classList.add("attendees-container");
 
-  const attendeesContainer = document.createElement("div");
-  attendeesContainer.classList.add("attendees-container");
+    const attendeesNumber = document.createElement("p");
+    attendeesNumber.textContent =
+      event.attendees.length +
+      (event.attendees.length > 1 ? " attendees" : " attendee");
 
-  const attendeesNumber = document.createElement("p");
-  attendeesNumber.textContent = event.attendees.length;
+    attendeesContainer.append(attendeesNumber);
 
-  attendeesContainer.append(attendeesNumber);
-
-  div.append(attendeesContainer);
+    div.append(attendeesContainer);
+  }
 
   if (event.createBy !== user._id) {
     const favoriteContainer = document.createElement("div");

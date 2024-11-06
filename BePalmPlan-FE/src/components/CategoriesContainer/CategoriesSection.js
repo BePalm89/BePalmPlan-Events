@@ -6,8 +6,11 @@ import { CategoryCard } from "../CategoryCard/CategoryCard";
 import { Title } from "../Title/Title";
 
 export const CategoriesSection = () => {
-  return `
-        <section id="categories-container">
+  const section = document.createElement("section");
+
+  section.id = "categories-container";
+
+  section.innerHTML += `
             ${Title("Explore categories")}
             <div class="categories-wrapper">
               ${CATEGORIES.map((category, index) => {
@@ -15,7 +18,7 @@ export const CategoriesSection = () => {
                   index % 2 === 0 ? "bgn-left" : "bgn-right";
                 return `${CategoryCard(category, backgroundClass)}`;
               }).join("")}
-            </div>
-        </section>
-    `;
+            </div>`;
+
+  return section;
 };

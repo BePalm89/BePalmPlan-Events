@@ -12,6 +12,7 @@
   border: 1px solid var(--black-color);
   border-radius: var(--border-radius-s);
   text-transform: capitalize;
+  z-index: 5;
 }
 
 #menu ul {

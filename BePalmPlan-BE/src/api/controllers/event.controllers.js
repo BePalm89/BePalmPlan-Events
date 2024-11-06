@@ -144,6 +144,8 @@ export const searchEvents = async (req, res, next) => {
           searchCriteria.date = { $gte: today.startOf("day").toDate() };
           break;
       }
+    } else {
+      searchCriteria.date = { $gte: today.startOf("day").toDate() };
     }
 
     const filteredEvents = await Event.aggregate([

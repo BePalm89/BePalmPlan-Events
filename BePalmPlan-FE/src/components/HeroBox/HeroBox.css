@@ -29,10 +29,17 @@
   width: 100%;
   text-align: right;
   flex: 1;
+  position: relative;
 }
 
 .hero-box-img-container img {
   width: 100%;
+}
+
+.hero-box-img-container #go-to-events {
+  position: absolute;
+  top: 0;
+  right: 0;
 }
 
 @media (max-width: 1024px) {

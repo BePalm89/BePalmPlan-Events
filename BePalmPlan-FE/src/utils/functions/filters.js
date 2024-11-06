@@ -52,7 +52,14 @@ export const filter = async () => {
     location = locationElement.value?.split(",")[0] ?? undefined;
   }
 
-  const date = dateElement.textContent.toLocaleLowerCase().replace(" ", "-");
+  let date;
+
+  if (dateElement.textContent.toLocaleLowerCase().includes("any time")) {
+    date = undefined;
+  } else {
+    date = dateElement.textContent.toLocaleLowerCase().replace(" ", "-");
+  }
+  //const date = dateElement.textContent.toLocaleLowerCase().replace(" ", "-");
 
   // Sorting
 
@@ -70,6 +77,8 @@ export const filter = async () => {
   if (sort === "relevance") params.sort = sort;
 
   const queryString = new URLSearchParams(params).toString();
+
+  console.log(queryString);
 
   if (queryString) {
     const { data } = await makeRequest({
@@ -111,7 +120,7 @@ export const resetFilters = () => {
   queryElement.value = "";
   categoriesElement.textContent = "Any Categories";
   typeElement.textContent = "Any Type";
-  dateElement.textContent = "Any Time";
+  dateElement.textContent = "Any Date";
   locationElement.value = "";
 
   // Style button to be disabled

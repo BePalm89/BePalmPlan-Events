@@ -173,21 +173,19 @@
   top: 50px;
   right: -20px;
   z-index: 1;
-  background-color: var(--primary-color);
+  background-color: var(--tertiary-color);
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-}
-
-.attendees-container p {
-  color: var(--black-color);
+  padding: var(--padding-xs);
+  border-radius: var(--border-radius-xs);
   transition: transform 0.3s ease;
 }
 
-.attendees-container p:hover {
-  transform: rotate(-45deg) scale(1.1);
+.attendees-container p {
   color: var(--white-color);
+}
+
+.attendees-container:hover {
+  transform: rotate(-30deg) scale(1.1);
 }

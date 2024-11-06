@@ -10,10 +10,10 @@ import { createPage } from "../../utils/functions/createPage";
 export const Home = () => {
   const div = createPage("home");
 
-  div.innerHTML += `
-    ${HeroBox()}
-    ${CategoriesSection()}
-    ${CitiesContainer()}
-    ${FeatureContainer()}
-    `;
+  div.append(
+    HeroBox(),
+    CategoriesSection(),
+    CitiesContainer(),
+    FeatureContainer()
+  );
 };

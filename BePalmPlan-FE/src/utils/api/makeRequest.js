@@ -2,6 +2,7 @@ import { Banner } from "../../components/Banner/Banner";
 import { Spinner } from "../../components/Spinner/Spinner";
 
 const BASE_URL = "https://be-palm-plan-events.vercel.app/api/v1";
+const BASE_URL_DEV = "http://localhost:3000/api/v1";
 
 export const makeRequest = async ({
   endpoint,
@@ -29,7 +30,7 @@ export const makeRequest = async ({
   }
 
   try {
-    const res = await fetch(BASE_URL + endpoint, {
+    const res = await fetch(BASE_URL_DEV + endpoint, {
       method,
       headers,
       body: isJSON ? JSON.stringify(body) : body,

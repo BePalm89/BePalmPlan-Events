@@ -44,6 +44,7 @@
   --margin-m: var(--spacing-m);
   --margin-l: var(--spacing-l);
   --margin-xl: var(--spacing-xl);
+  --margin-xxl: var(--spacing-xxl);
 
   --padding-xs: var(--spacing-xs);
   --padding-s: var(--spacing-s);

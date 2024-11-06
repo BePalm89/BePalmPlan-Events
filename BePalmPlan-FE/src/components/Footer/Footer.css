@@ -1,22 +1,26 @@
 footer {
-    background-color: var(--tertiary-color);
+  background-color: var(--tertiary-color);
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  z-index: 4;
 }
 
 footer ul {
-    display: flex;
-    justify-content: center;
-    gap: var(--gap-m);
-    padding: var(--padding-s);
+  display: flex;
+  justify-content: center;
+  gap: var(--gap-m);
+  padding: var(--padding-s);
 }
 
 footer ul li a {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 footer ul li a img {
-    transition: transform 0.3s ease;
+  transition: transform 0.3s ease;
 }
 
 footer ul li a img:hover {
-    transform: scale(1.1) rotate(15deg);
+  transform: scale(1.1) rotate(15deg);
 }
