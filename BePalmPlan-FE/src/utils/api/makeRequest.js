@@ -30,7 +30,7 @@ export const makeRequest = async ({
   }
 
   try {
-    const res = await fetch(BASE_URL_DEV + endpoint, {
+    const res = await fetch(BASE_URL + endpoint, {
       method,
       headers,
       body: isJSON ? JSON.stringify(body) : body,
